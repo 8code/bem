@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware("auth:api")->prefix('v1')->group(function() {
-    Route::get('profile', 'Api\UserController@profile');
-    Route::post('ubah-password', 'Api\UserController@ubahPass');
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
 });
+
+
+Route::post('/register', 'Api\AuthController@register');
+Route::post('/login', 'Api\AuthController@login');

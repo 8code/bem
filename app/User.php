@@ -7,15 +7,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, Notifiable;
-
-
-    public function findForPassport($username)
-    {
-        return $this->where('username', $username)->orWhere('email', $username)->first();
-    }
+    use HasApiTokens,Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -23,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','username','avatar','no_hp','jk','tgl_lahir'
+        'name', 'email', 'password','admin'
     ];
 
     /**

@@ -18,8 +18,9 @@ Route::get('/', function () {
 });
 
 
-Route::get('daftar/fb', 'AuthController@redirectToFb');
-Route::get('daftar/fb/callback', 'AuthController@handleFbCallback');
-Auth::routes();
+Auth::routes([
+    'verify' => true,
+    'register' => false
+]);
 
 Route::get('/home', 'HomeController@index')->name('home');

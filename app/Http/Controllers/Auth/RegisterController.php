@@ -8,7 +8,6 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Auth;
 
 class RegisterController extends Controller
 {
@@ -42,11 +41,6 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    public function redirectTo()
-    {
-        return 'http://localhost:3000/login?username='.Auth::user()->username;
-    }
-
     /**
      * Get a validator for an incoming registration request.
      *
@@ -56,14 +50,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => ['required', 'string','max:255', 'unique:users'],
             'name' => ['required', 'string', 'max:255'],
-            'avatar' => ['required', 'string', 'max:255'],
-            'no_hp' => ['required', 'string', 'max:255'],
-            'jk' => ['required', 'string', 'max:255'],
-            'tgl_lahir' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
@@ -76,11 +65,6 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'username' => $data['username'],
-            'avatar' => $data['avatar'],
-            'no_hp' => $data['no_hp'],
-            'jk' => $data['jk'],
-            'tgl_lahir' => $data['tgl_lahir'],
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
