@@ -19,5 +19,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/register', 'Api\AuthController@register');
+Route::post('/loginfb', 'Api\AuthController@loginfb');
 Route::post('/login', 'Api\AuthController@login');
+
+
+Route::middleware('auth:api')->group(function(){
+
+
+    Route::get('group','GroupController@index');
+    Route::get('group/{id}','GroupController@show');
+    Route::post('group','GroupController@create');
+    Route::post('group/edit/{id}','GroupController@edit');
+    Route::get('group/delete/{id}','GroupController@delete');
+
+    
+});
