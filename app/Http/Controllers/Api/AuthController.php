@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Http;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Auth;
+use Str;
+use Storage;
 
 
 class AuthController extends Controller
@@ -22,8 +24,6 @@ class AuthController extends Controller
 
         $cek = json_decode($res->getBody()); 
         
-        
-
         if(!isset($cek->id)){
             return response()->json(['message' => 'Invalid Credentials']);
         }
@@ -87,6 +87,27 @@ class AuthController extends Controller
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
 
         return response()->json(['user' => auth()->user(), 'access_token' => $accessToken]);
+
+    }
+    public function uploadImage(Request $req){
+        if(Auth::id()){
+            $image_64 = $req->image; 
+            $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
+          
+            $replace = substr($image_64, 0, strpos($image_64, ',')+1); 
+          
+           $image = str_replace($replace, '', $image_64); 
+          
+           $image = str_replace(' ', '+', $image); 
+          
+           $imageName = Auth::id()."/".Str::random(10).'.'.$extension;
+          
+           Storage::disk('public')->put($imageName, base64_decode($image));
+    
+           return response()->json(['url' => $imageName]);
+        }else{
+           return response()->json(['url' => '']);
+        }
 
     }
 }

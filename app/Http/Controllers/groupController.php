@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\group as MetDa;
+use Auth;
 
 
 class groupController extends Controller
@@ -12,7 +13,18 @@ class groupController extends Controller
     public function index()
     {
         $metda = MetDa::latest()->paginate(5);
-        return response($metda);
+        return response()->json($metda);
+    }
+
+    public function myGroup()
+    {
+        if(Auth::id()){
+            $metda = MetDa::where("user_id",Auth::id())->orderBy("id","DESC")->get();
+            return response()->json($metda);
+        }else{
+            return response()->json('');
+        }
+       
     }
     public function create(Request $request)
     {
@@ -34,7 +46,7 @@ class groupController extends Controller
     public function show($id)
     {
         $metda = MetDa::find($id);
-        return response($metda);
+        return response()->json($metda);
     }
 
     public function edit(Request $request,$id)

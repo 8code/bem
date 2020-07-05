@@ -26,6 +26,11 @@ Route::post('/login', 'Api\AuthController@login');
 Route::middleware('auth:api')->group(function(){
 
 
+    Route::post('upload-image','Api\AuthController@uploadImage');
+
+
+
+    Route::get('mygroup','GroupController@myGroup');
     Route::get('group','GroupController@index');
     Route::get('group/{id}','GroupController@show');
     Route::post('group','GroupController@create');
