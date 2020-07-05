@@ -30,12 +30,12 @@ Route::middleware('auth:api')->group(function(){
 
 
 
-    Route::get('mygroup','GroupController@myGroup');
-    Route::get('group','GroupController@index');
-    Route::get('group/{id}','GroupController@show');
-    Route::post('group','GroupController@create');
-    Route::post('group/edit/{id}','GroupController@edit');
-    Route::get('group/delete/{id}','GroupController@delete');
+    Route::get('mygroup','groupController@myGroup');
+    Route::get('group','groupController@index');
+    Route::get('group/{id}','groupController@show');
+    Route::post('group','groupController@create');
+    Route::post('group/edit/{id}','groupController@edit');
+    Route::get('group/delete/{id}','groupController@delete');
 
     
 });
