@@ -19,7 +19,6 @@ class CreateQnasTable extends Migration
             $table->string("audio",100);
             $table->integer("user_id");
             $table->integer("group_id")->nullable();
-            $table->integer("event_id")->nullable();
             $table->integer("question_id")->nullable();
             $table->timestamps();
         });
