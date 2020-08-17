@@ -32,7 +32,7 @@ Route::middleware('auth:api')->group(function(){
 
     Route::get('mygroup','groupController@myGroup');
     Route::get('group','groupController@index');
-    Route::get('group/{id}','groupController@show');
+    Route::get('group/{username}','groupController@show');
     Route::post('group','groupController@create');
     Route::post('group/edit/{id}','groupController@edit');
     Route::get('group/delete/{id}','groupController@delete');

@@ -43,10 +43,14 @@ class groupController extends Controller
         
     }
 
-    public function show($id)
+    public function show($username)
     {
-        $metda = MetDa::find($id);
-        return response()->json($metda);
+        $metda = MetDa::where("username",$username)->first();
+        if($metda){
+            return response()->json($metda);
+        }else{
+            return "";
+        }
     }
 
     public function edit(Request $request,$id)
