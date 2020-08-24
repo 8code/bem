@@ -22,6 +22,7 @@ class CreateGroupsTable extends Migration
             $table->string("type",50);
             $table->string("university",100)->default('Siliwangi University');
             $table->integer("user_id");
+            $table->integer("status")->default(1);
             $table->timestamps();
         });
     }

@@ -29,13 +29,21 @@ Route::middleware('auth:api')->group(function(){
     Route::post('upload-image','Api\AuthController@uploadImage');
 
 
-
+// Group
     Route::get('mygroup','groupController@myGroup');
     Route::get('group','groupController@index');
+    Route::get('group/follow/{id}','groupController@follow');
     Route::get('group/{username}','groupController@show');
     Route::post('group','groupController@create');
     Route::post('group/edit/{id}','groupController@edit');
     Route::get('group/delete/{id}','groupController@delete');
+
+// QNA
+
+    Route::get('quest/{id}','groupController@quest');
+    Route::post('quest','qnaController@create');
+
+
 
     
 });

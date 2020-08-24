@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQnasTable extends Migration
+class CreateUserFollowsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateQnasTable extends Migration
      */
     public function up()
     {
-        Schema::create('qnas', function (Blueprint $table) {
+        Schema::create('user_follows', function (Blueprint $table) {
             $table->id();
-            $table->string("text",255);
-            $table->string("audio",100)->nullable();
             $table->integer("user_id");
-            $table->integer("group_id")->nullable();
-            $table->integer("quest_id")->nullable();
+            $table->integer("followed_id");
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateQnasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('qnas');
+        Schema::dropIfExists('user_follows');
     }
 }
