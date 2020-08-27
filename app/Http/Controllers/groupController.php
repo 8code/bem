@@ -7,6 +7,7 @@ use App\group as MetDa;
 use Auth;
 use App\group_follow;
 use App\qna;
+use App\User;
 use App\qna_follow;
 
 
@@ -34,6 +35,8 @@ class groupController extends Controller
                             $filterType = " quest_id is null";
                         }else if($req->filter == 'Quest & Balasan'){
                             $filterType = 'id';
+                        }else if($req->filter == 'Media'){
+                            $filterType = 'audio != ""';
                         }else{
                             $filterType = 'id';
                         }
@@ -54,6 +57,11 @@ class groupController extends Controller
 
 
                     $metda->map(function($q) {
+
+                        if($q->quest){
+
+                            $q->membalas_user = User::find($q->quest->user_id)->username;
+                        }
 
                         $q->qna_total = qna::where("quest_id",$q->id)->count();
 

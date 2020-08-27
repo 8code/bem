@@ -23,6 +23,7 @@ class qnaController extends Controller
 
                 $metda = new MetDa;
                 $metda->text = $req->text;
+                $metda->audio = $req->audio;
                 $metda->quest_id = $req->quest_id;
                 $metda->group_id = $req->group_id;
                 $metda->user_id = Auth::id();
