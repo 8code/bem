@@ -37,11 +37,14 @@ Route::middleware('auth:api')->group(function(){
     Route::post('group','groupController@create');
     Route::post('group/edit/{id}','groupController@edit');
     Route::get('group/delete/{id}','groupController@delete');
+    Route::get('group/quest/{id}','groupController@quest');//group
 
 // QNA
 
-    Route::get('quest/{id}','groupController@quest');
+    Route::get('quest/home','qnaController@quest_home');//home
     Route::post('quest','qnaController@create');
+    Route::get('quest/follow/{id}','qnaController@follow');
+
 
 
 

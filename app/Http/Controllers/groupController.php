@@ -22,7 +22,7 @@ class groupController extends Controller
         if(Auth::id()){
                 
                     $skip = 0;
-                    $take = 20;
+                    $take = 5;
 
                     if($req->page > 1){
                         $skip = $take * $req->page-1;
@@ -163,15 +163,31 @@ class groupController extends Controller
         if(Auth::id()){
             $follow = group_follow::where("user_id",Auth::id())->pluck("group_id");
             $metda = MetDa::whereIn("id",$follow)
-            ->orderBy("name","ASC")
             ->get();
 
-            $metda->map(function($g){
+            $res = $metda->map(function($g){
                 $qna = qna::where("group_id",$g->id)->count();
+                
+                $qna_last = qna::where("group_id",$g->id)->orderBy("created_at","DESC")->first();
+
+                if($qna_last){
+                    $g->last_active = strtotime($qna_last->created_at);
+                }else{
+                    $g->last_active = strtotime($g->created_at);
+                }
+
+                $gf = group_follow::where("group_id",$g->id)->count();
                 $g->qna_total = $qna;
+                $g->follow_total = $gf;
+                return $g;
             });
 
-            return response()->json($metda);
+            // return $res;
+
+
+            $final = $res->sortByDesc("last_active")->toArray();
+
+            return response()->json($final);
         }else{
             return response()->json('');
         }
@@ -197,6 +213,14 @@ class groupController extends Controller
     public function show($username)
     {
         $metda = MetDa::where("username",$username)->first();
+
+        $cek = group_follow::where("user_id",Auth::id())->where("group_id",$metda->id)->first();
+
+        if($cek){
+            $metda->followed = true;
+        }else{
+            $metda->followed = false;
+        }
         if($metda){
             return response()->json($metda);
         }else{
