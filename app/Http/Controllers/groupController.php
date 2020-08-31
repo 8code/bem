@@ -19,6 +19,7 @@ class groupController extends Controller
 
     
     public function quest(Request $req, $id){
+        // return $id;
         if(Auth::id()){
                 
                     $skip = 0;
@@ -34,7 +35,7 @@ class groupController extends Controller
                         if($req->filter == 'Quest Only'){
                             $filterType = " quest_id is null";
                         }else if($req->filter == 'Quest & Balasan'){
-                            $filterType = 'id';
+                            $filterType = 'audio != ""';
                         }else if($req->filter == 'Media'){
                             $filterType = 'audio != ""';
                         }else{
@@ -63,11 +64,7 @@ class groupController extends Controller
                             $q->membalas_user = User::find($q->quest->user_id)->username;
                         }
 
-                        $q->qna_total = qna::where("quest_id",$q->id)->count();
-
-                        $q->total_follower = qna_follow::where("quest_id",$q->id)->count();
-
-
+                        
                         $follow = qna_follow::
                             where("user_id",Auth::id())
                             ->where("quest_id",$q->id)
@@ -76,8 +73,10 @@ class groupController extends Controller
                         if($follow){
                             $q->followed = true;
                         }
+
+                        return $q;
                         
-                    });
+                    })->toArray();
 
                     $respons = [
                         "data" => $metda
@@ -137,7 +136,7 @@ class groupController extends Controller
         $metda->map(function($g) {
 
             $qna = qna::where("group_id",$g->id)->count();
-            $g->qna_total = $qna;
+            $g->total_qna = $qna;
             
             $follow = group_follow::
                 where("user_id",Auth::id())
@@ -177,7 +176,7 @@ class groupController extends Controller
                 }
 
                 $gf = group_follow::where("group_id",$g->id)->count();
-                $g->qna_total = $qna;
+                $g->total_qna = $qna;
                 $g->follow_total = $gf;
                 return $g;
             });

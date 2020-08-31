@@ -20,6 +20,9 @@ class CreateQnasTable extends Migration
             $table->integer("user_id");
             $table->integer("group_id")->nullable();
             $table->integer("quest_id")->nullable();
+            $table->integer("total_follower")->default(0);
+            $table->integer("total_qna")->default(0);
+            $table->integer("activity")->default(0);
             $table->timestamps();
         });
     }

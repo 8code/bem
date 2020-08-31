@@ -42,6 +42,7 @@ Route::middleware('auth:api')->group(function(){
 // QNA
 
     Route::get('quest/home','qnaController@quest_home');//home
+    Route::get('quest/home/explore','qnaController@quest_home_explore');//home
     Route::post('quest','qnaController@create');
     Route::get('quest/follow/{id}','qnaController@follow');
 
