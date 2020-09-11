@@ -8,7 +8,9 @@ use App\qna_follow;
 use Auth;
 use App\group_follow;
 use App\qna;
+use App\group;
 use App\User;
+use App\activity;
 
 
 class qnaController extends Controller
@@ -143,19 +145,33 @@ class qnaController extends Controller
                 $follow->user_id = Auth::id();
                 $follow->quest_id = $id;
                 $follow->save();
+
+                $dataAct = [
+                    "user_id" => Auth::id(),
+                    "quest_user_id" => $id,
+                    "quest_group_id" => null,
+                    "tipe" => 1,
+                    "activity" => "@".Auth::user()->username." Menyukai Quest Anda",
+                    "link" => "/quest/$id",
+                ];
+                activity::create($dataAct);
+
+                $update = qna::find($id);
+                if($update){
+                    $update->total_qna = qna::where("quest_id",$id)->count();
+                    $update->total_follower = qna_follow::where("quest_id",$id)->count();
+                    $update->activity = $update->total_qna + $update->total_follower;
+                    $update->update();
+                }
+    
+
             }
 
-            $update = qna::find($id);
-
-            $update->total_qna = qna::where("quest_id",$id)->count();
-
-            $update->total_follower = qna_follow::where("quest_id",$id)->count();
-
-            $update->activity = $update->total_qna + $update->total_follower;
-
-            $update->update();
+         
+       
         }
     }
+
     public function index()
     {
         $metda = MetDa::latest()->paginate(5);
@@ -163,6 +179,8 @@ class qnaController extends Controller
     }
     public function create(Request $req)
     {
+
+
       
         try {
             if(Auth::id()){
@@ -176,15 +194,38 @@ class qnaController extends Controller
                 $metda->save();
 
 
-                $update = qna::find($id);
+                $update = qna::find($req->quest_id);
 
-                $update->total_qna = qna::where("quest_id",$metda->id)->count();
+                if($update){
+                    $update->total_qna = qna::where("quest_id",$req->quest_id)->count();
     
-                $update->total_follower = qna_follow::where("quest_id",$metda->id)->count();
-    
-                $update->activity = $update->total_qna + $update->total_follower;
-    
-                $update->update();
+                    $update->total_follower = qna_follow::where("quest_id",$req->quest_id)->count();
+        
+                    $update->activity = $update->total_qna + $update->total_follower;
+        
+                    $update->update();
+
+                    
+                        $dataAct = [
+                            "user_id" => Auth::id(),
+                            "quest_user_id" => $req->quest_id,
+                            "quest_group_id" => null,
+                            "tipe" => 2,
+                            "activity" => "@".Auth::user()->username." Membalas Quest Anda",
+                            "link" => "/quest/$req->quest_idd",
+                        ];
+                        activity::create($dataAct);
+
+                }
+
+                 $updateg = group::find($req->group_id);
+                 
+                if($updateg){
+                    $updateg->last_active= strtotime($metda->created_at);
+                    
+                    $updateg->update();
+                }
+                        
 
                 return response()->json([
                     'success' => true
@@ -203,7 +244,24 @@ class qnaController extends Controller
 
     public function show($id)
     {
-        $metda = MetDa::find($id);
+        $metda = MetDa::with("group")
+        ->with("user")
+        ->with("quest")
+        ->find($id);
+
+        if($metda->quest){
+
+            $metda->membalas_user = User::find($metda->quest->user_id)->username;
+        }
+
+        $follow = qna_follow::
+                where("user_id",Auth::id())
+                ->where("quest_id",$id)
+                ->first();
+
+            if($follow){
+                $metda->followed = true;
+            }
         return response($metda);
     }
 
@@ -238,5 +296,50 @@ class qnaController extends Controller
                 'data'=> $th
             ]);
         }
+    }
+
+    public function questBalasan(Request $req, $id){
+        if(Auth::id()){
+                
+            $skip = 0;
+            $take = 5;
+
+            if($req->page > 1){
+                $skip = $take * $req->page-1;
+            }
+
+            $metda = qna::
+                 with("group")
+                ->with("user")
+                ->with("quest")
+                ->where("quest_id", $id)
+                ->orderBy("activity","DESC")
+                ->orderBy("id","DESC")
+                ->take(100)
+                ->get();
+
+
+
+            $metda->map(function($q) {
+
+                if($q->quest){
+
+                    $q->membalas_user = User::find($q->quest->user_id)->username;
+                }
+
+
+                $follow = qna_follow::
+                    where("user_id",Auth::id())
+                    ->where("quest_id",$q->id)
+                    ->first();
+
+                if($follow){
+                    $q->followed = true;
+                }
+                
+            });
+
+            return response()->json($metda->skip($skip)->take($take)->toArray());
+            }
     }
 }

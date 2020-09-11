@@ -24,9 +24,16 @@ Route::post('/login', 'Api\AuthController@login');
 
 
 Route::middleware('auth:api')->group(function(){
+Route::post('upload-image','Api\AuthController@uploadImage');
 
 
-    Route::post('upload-image','Api\AuthController@uploadImage');
+Route::get('/notifications','activityController@notif');
+
+
+// Profile
+
+Route::get('profile/{id}','profileController@profile');//group
+Route::get('profile/quest/{id}','profileController@quest');//group
 
 
 // Group
@@ -45,6 +52,9 @@ Route::middleware('auth:api')->group(function(){
     Route::get('quest/home/explore','qnaController@quest_home_explore');//home
     Route::post('quest','qnaController@create');
     Route::get('quest/follow/{id}','qnaController@follow');
+    Route::get('quest/{id}','qnaController@show');
+
+    Route::get('quest/balasan/{id}','qnaController@questBalasan');
 
 
 

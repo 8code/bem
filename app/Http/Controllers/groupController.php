@@ -57,6 +57,9 @@ class groupController extends Controller
 
 
 
+                    if($metda){
+
+                   
                     $metda->map(function($q) {
 
                         if($q->quest){
@@ -77,7 +80,7 @@ class groupController extends Controller
                         return $q;
                         
                     })->toArray();
-
+                }
                     $respons = [
                         "data" => $metda
                     ];
@@ -99,8 +102,7 @@ class groupController extends Controller
     }
     public function index(Request $req)
     {
-        
-       
+    
         $skip = 0;
         $take = 10;
 
@@ -126,14 +128,19 @@ class groupController extends Controller
         }
 
 
-        $metda = MetDa::orderBy("name","ASC")
-            ->whereRaw($filterType)
+        
+    
+
+        $metda = MetDa::
+             whereRaw($filterType)
             ->whereRaw($filterSearch)
             ->skip($skip)->take($take)
+            ->orderBy("last_active","DESC")
             ->get();
+        
 
 
-        $metda->map(function($g) {
+        $res = $metda->map(function($g) {
 
             $qna = qna::where("group_id",$g->id)->count();
             $g->total_qna = $qna;
@@ -146,11 +153,14 @@ class groupController extends Controller
             if($follow){
                 $g->followed = true;
             }
+
+            return $g;
             
         });
 
+
         $respons = [
-            "data" => $metda,
+            "data" => $res,
             "type" => $type
         ];
 
@@ -162,31 +172,18 @@ class groupController extends Controller
         if(Auth::id()){
             $follow = group_follow::where("user_id",Auth::id())->pluck("group_id");
             $metda = MetDa::whereIn("id",$follow)
+            ->orderBy("last_active","DESC")
             ->get();
 
             $res = $metda->map(function($g){
                 $qna = qna::where("group_id",$g->id)->count();
-                
-                $qna_last = qna::where("group_id",$g->id)->orderBy("created_at","DESC")->first();
-
-                if($qna_last){
-                    $g->last_active = strtotime($qna_last->created_at);
-                }else{
-                    $g->last_active = strtotime($g->created_at);
-                }
-
                 $gf = group_follow::where("group_id",$g->id)->count();
                 $g->total_qna = $qna;
                 $g->follow_total = $gf;
                 return $g;
             });
 
-            // return $res;
-
-
-            $final = $res->sortByDesc("last_active")->toArray();
-
-            return response()->json($final);
+            return response()->json($res);
         }else{
             return response()->json('');
         }
@@ -212,15 +209,15 @@ class groupController extends Controller
     public function show($username)
     {
         $metda = MetDa::where("username",$username)->first();
-
-        $cek = group_follow::where("user_id",Auth::id())->where("group_id",$metda->id)->first();
-
-        if($cek){
-            $metda->followed = true;
-        }else{
-            $metda->followed = false;
-        }
         if($metda){
+            $cek = group_follow::where("user_id",Auth::id())->where("group_id",$metda->id)->first();
+
+            if($cek){
+                $metda->followed = true;
+            }else{
+                $metda->followed = false;
+            }
+        
             return response()->json($metda);
         }else{
             return "";

@@ -22,5 +22,9 @@
         "sass-loader": "^8.0.0",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
+    },
+    "dependencies": {
+        "vue-select": "^3.10.8",
+        "vue2-datepicker": "^3.6.2"
     }
 }

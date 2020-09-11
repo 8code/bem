@@ -20,7 +20,8 @@ class CreateGroupsTable extends Migration
             $table->string("avatar",100);
             $table->text("desc");
             $table->string("type",50);
-            $table->string("university",100)->default('Siliwangi University');
+            $table->string("last_active",150)->nullable();
+            $table->string("university",100)->default('Universitas Siliwangi');
             $table->integer("user_id");
             $table->integer("status")->default(1);
             $table->timestamps();
