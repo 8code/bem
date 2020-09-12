@@ -38,7 +38,7 @@ class profileController extends Controller
                 }
 
                 if($req->avatar){
-                    Storage::delete($data->avatar);
+                    Storage::delete($data->id);
             
                     $image_64 = $req->avatar; //your base64 encoded data
             
@@ -50,7 +50,7 @@ class profileController extends Controller
             
                     $image = str_replace(' ', '+', $image); 
             
-                    $imageName = time().'.png';
+                    $imageName = $data->id.'.png';
                     
             
                     Storage::disk('public')->put($imageName, base64_decode($image));
