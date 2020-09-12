@@ -23,7 +23,7 @@ class activityController extends Controller
 
            // 1 Menyukai Quest, 2 Membalas Quest , 3 Admin Membuat Quest , 4 Memfollow Akun
 
-           $act = activity::
+                      $act = activity::
                          leftJoin("qnas as quest","quest.id","activities.quest_user_id")
                          ->leftJoin("users as user","quest.user_id","user.id")
                         ->where("quest.user_id",Auth::id())

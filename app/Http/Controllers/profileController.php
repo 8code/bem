@@ -12,6 +12,56 @@ use App\qna_follow;
 class profileController extends Controller
 {
 
+
+    public function updateProfile(Request $req){
+        $res = [];
+
+        if(Auth::id()){
+           
+            // Cek Auth Siapa
+            $data = User::find($req->id);
+
+            if($data->id == Auth::id()){
+                
+                if(Auth::user()->username != $req->username){
+                    $cekUsername = User::where("username",$req->username)->first();
+                    if(!$cekUsername){
+                        $data->username =$req->username;
+                    }else{
+                        $res = [
+                            "info" => "Username Telah digunakan"
+                        ];
+                        return $res;
+
+                    }
+                }
+
+                $data->name = $req->name;
+                $data->gender = $req->gender;
+                $data->study_program = $req->study_program;
+                $data->university = $req->university;
+                $data->angkatan = $req->angkatan;
+                $data->instagram = $req->instagram;
+                $data->whatsapp = $req->whatsapp;
+
+                $data->save();
+
+                $res = [
+                    "status" => "Success",
+                    "data" => $data
+                ];
+                
+                return $res;
+              
+             
+            }else{
+                array_push($res, [
+                    "status" => "Failed"
+                ]);
+                return $res;
+            }
+        }
+    }
     public function profile($id){
         return User::where("username",ltrim($id, '@'))->first();
     }

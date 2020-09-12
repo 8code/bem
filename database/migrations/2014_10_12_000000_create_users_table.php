@@ -29,6 +29,8 @@ class CreateUsersTable extends Migration
             $table->string('university')->default('Universitas Siliwangi');
             $table->timestamp('email_verified_at')->nullable();
             $table->boolean('admin')->default(0);
+            $table->string('instagram',100)->nullable();
+            $table->string('whatsapp',20)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

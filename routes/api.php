@@ -34,7 +34,7 @@ Route::get('/notifications','activityController@notif');
 
 Route::get('profile/{id}','profileController@profile');//group
 Route::get('profile/quest/{id}','profileController@quest');//group
-
+Route::post('update-profile','profileController@updateProfile');
 
 // Group
     Route::get('mygroup','groupController@myGroup');
@@ -55,6 +55,14 @@ Route::get('profile/quest/{id}','profileController@quest');//group
     Route::get('quest/{id}','qnaController@show');
 
     Route::get('quest/balasan/{id}','qnaController@questBalasan');
+
+
+// Helper
+Route::get('list-prodi','helperController@listProdi');
+Route::get('list-univ','helperController@listUniv');
+
+
+
 
 
 
