@@ -8,6 +8,7 @@ use Auth;
 use App\group_follow;
 use App\qna;
 use App\qna_follow;
+use Storage;
 
 class profileController extends Controller
 {
@@ -34,6 +35,27 @@ class profileController extends Controller
                         return $res;
 
                     }
+                }
+
+                if($req->avatar){
+                    Storage::delete($data->avatar);
+            
+                    $image_64 = $req->avatar; //your base64 encoded data
+            
+                    $replace = substr($image_64, 0, strpos($image_64, ',')+1); 
+            
+                    // find substring fro replace here eg: data:image/png;base64,
+            
+                    $image = str_replace($replace, '', $image_64); 
+            
+                    $image = str_replace(' ', '+', $image); 
+            
+                    $imageName = time().'.png';
+                    
+            
+                    Storage::disk('public')->put($imageName, base64_decode($image));
+
+                    $data->avatar = env("APP_URL")."/storage/".$imageName;
                 }
 
                 $data->name = $req->name;
