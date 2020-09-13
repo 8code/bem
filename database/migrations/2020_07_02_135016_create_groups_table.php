@@ -18,6 +18,7 @@ class CreateGroupsTable extends Migration
             $table->string('username',100)->unique();
             $table->string("name",100);
             $table->string("avatar",100);
+            $table->string("instagram",100)->nullable();
             $table->text("desc");
             $table->string("type",50);
             $table->string("last_active",150)->nullable();

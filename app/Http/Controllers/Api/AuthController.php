@@ -19,7 +19,6 @@ class AuthController extends Controller
 
     public function loginfb(Request $request)
     {
-
         
         $res = Http::get('https://graph.facebook.com/'.$request->userID.'?fields=id,name,email&access_token='.$request->accessToken);
 

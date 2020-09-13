@@ -87,6 +87,11 @@ class profileController extends Controller
     public function profile($id){
         return User::where("username",ltrim($id, '@'))->first();
     }
+
+    public function profileById($id){
+        return User::find($id);
+    }
+    
     
     public function quest(Request $req, $id){
         // return $id;

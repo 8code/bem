@@ -33,6 +33,7 @@ Route::get('/notifications','activityController@notif');
 // Profile
 
 Route::get('profile/{id}','profileController@profile');//group
+Route::get('profile-by-id/{id}','profileController@profileById');//group
 Route::get('profile/quest/{id}','profileController@quest');//group
 Route::post('update-profile','profileController@updateProfile');
 

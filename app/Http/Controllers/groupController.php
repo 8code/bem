@@ -9,15 +9,12 @@ use App\group_follow;
 use App\qna;
 use App\User;
 use App\qna_follow;
-
+use Storage;
 
 
 class groupController extends Controller
 {
 
-
-
-    
     public function quest(Request $req, $id){
         // return $id;
         if(Auth::id()){
@@ -208,7 +205,8 @@ class groupController extends Controller
 
     public function show($username)
     {
-        $metda = MetDa::where("username",$username)->first();
+        $metda = MetDa::where("username",$username)
+        ->with("owner")->first();
         if($metda){
             $cek = group_follow::where("user_id",Auth::id())->where("group_id",$metda->id)->first();
 
@@ -224,13 +222,70 @@ class groupController extends Controller
         }
     }
 
-    public function edit(Request $request,$id)
+    public function edit(Request $req,$id)
     {
+        
         try {
-            MetDa::find($id)->update($request->all());
-            return response()->json([
-                'success' => true
-            ]);
+
+            $data = Metda::find($id);
+
+            if($data->user_id == Auth::id()){
+               
+
+            if($data->username != $req->username){
+                $cekUsername = User::where("username",$req->username)->first();
+                if(!$cekUsername){
+                    $data->username =$req->username;
+                }else{
+                    $res = [
+                        "info" => "Username Telah digunakan"
+                    ];
+                    return $res;
+                }
+            }
+
+            if($req->avatar){
+                Storage::delete($data->id);
+        
+                $image_64 = $req->avatar; //your base64 encoded data
+        
+                $replace = substr($image_64, 0, strpos($image_64, ',')+1); 
+        
+                // find substring fro replace here eg: data:image/png;base64,
+        
+                $image = str_replace($replace, '', $image_64); 
+        
+                $image = str_replace(' ', '+', $image); 
+        
+                $imageName = $data->id.'-group.png';
+                
+        
+                Storage::disk('public')->put($imageName, base64_decode($image));
+
+                $data->avatar = env("APP_URL")."/storage/".$imageName;
+            }
+
+            $data->name = $req->name;
+            $data->instagram = $req->instagram;
+            $data->type = $req->type;
+            $data->desc = $req->desc;
+            $data->save();
+
+                $res = [
+                    "status" => "Success"
+                ];
+                
+                return $res;
+
+                
+            }else{
+                return "";
+            }
+            
+         
+
+
+
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
