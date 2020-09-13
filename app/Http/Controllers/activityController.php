@@ -27,6 +27,7 @@ class activityController extends Controller
                          leftJoin("qnas as quest","quest.id","activities.quest_user_id")
                          ->leftJoin("users as user","quest.user_id","user.id")
                         ->where("quest.user_id",Auth::id())
+                        ->orWhere("activities.mention","like",Auth::id())
                         ->select("activities.*","quest.text","user.avatar")
                         ->skip($skip)->take($take)
                         ->orderBy("id","DESC")

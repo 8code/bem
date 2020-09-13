@@ -269,6 +269,13 @@ class groupController extends Controller
             $data->instagram = $req->instagram;
             $data->type = $req->type;
             $data->desc = $req->desc;
+
+            if($req->admin){
+                $admin = User::where("username",$req->admin)->first();
+                if($admin){
+                    $data->user_id = $admin->id;
+                }
+            }
             $data->save();
 
                 $res = [

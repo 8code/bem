@@ -17,6 +17,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/instagram/{username}', function ($username) {
+
+    $instagram = new \InstagramScraper\Instagram();
+    $nonPrivateAccountMedias = $instagram->getMedias($username);
+    // echo $nonPrivateAccountMedias[0]->getLink();
+
+    dd($nonPrivateAccountMedias);
+
+    return $username;
+});
+
 
 Auth::routes(['verify' => true]);
 

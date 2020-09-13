@@ -18,9 +18,10 @@ class CreateActivitiesTable extends Migration
             $table->integer("user_id");
             $table->integer("quest_user_id");
             $table->integer("quest_group_id")->nullable(); // Khusus Info dari Admin Group
-            $table->integer("tipe"); // 1 Menyukai Quest, 2 Membalas Quest , 3 Admin Membuat Quest , 4 Memfollow Akun
+            $table->integer("tipe"); // 1 Menyukai Quest, 2 Membalas Quest , 3 Mentions Akun, 4 Admin Membuat Quest , 5 Memfollow Akun
             $table->string("activity"); // Text "@admin Membuat Quest 'Ini Peryaratan Buat Ombus Fakultas Ya' "
             $table->string("link"); // Link Menuju Quest
+            $table->string("mention");
             $table->timestamps();
         });
     }

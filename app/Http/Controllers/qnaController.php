@@ -182,7 +182,7 @@ class qnaController extends Controller
 
 
       
-        try {
+        // try {
             if(Auth::id()){
 
                 $metda = new MetDa;
@@ -212,7 +212,7 @@ class qnaController extends Controller
                             "quest_group_id" => null,
                             "tipe" => 2,
                             "activity" => "@".Auth::user()->username." Membalas Quest Anda",
-                            "link" => "/quest/$req->quest_idd",
+                            "link" => "/quest/$req->quest_id",
                         ];
                         activity::create($dataAct);
 
@@ -225,19 +225,52 @@ class qnaController extends Controller
                     
                     $updateg->update();
                 }
+
+
+                if($req->text){
+                    $textToArray =  explode(" ",$req->text);
+
+
+                    
+
+                    foreach($textToArray as $text){
+                        if(substr($text, 0, 1) == "@"){
+
+                            // return json_encode($text);
+
+                           
+                            // Mentions
+                            $dataAct0 = [
+                                "user_id" => Auth::id(),
+                                "quest_user_id" => $req->quest_id,
+                                "quest_group_id" => null,
+                                "tipe" => 3,
+                                "activity" => "@".Auth::user()->username." Mention Anda",
+                                "link" => "/quest/$req->quest_id",
+                                "mention" => $text,
+                            ];
+
+                            activity::create($dataAct0);
+
+
+                        }
+                    }
+
+                }
+            
                         
 
                 return response()->json([
                     'success' => true
                 ]);
              }
-        } catch (\Throwable $th) {
+        // } catch (\Throwable $th) {
 
-            return response()->json([
-                'success' => false,
-                'data'=> $th
-            ]);
-        }
+        //     return response()->json([
+        //         'success' => false,
+        //         'data'=> $th
+        //     ]);
+        // }
        
         
     }
