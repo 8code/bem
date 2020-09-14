@@ -17,18 +17,29 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/instagram/{username}', function ($username) {
-
-    $instagram = new \InstagramScraper\Instagram();
-    $nonPrivateAccountMedias = $instagram->getMedias($username);
-    // echo $nonPrivateAccountMedias[0]->getLink();
-
-    dd($nonPrivateAccountMedias);
-
-    return $username;
-});
-
 
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/api/instagram/{username}', function ($username) {
+
+
+    $instagram = new \InstagramScraper\Instagram();
+    $medias = $instagram->getMedias(ltrim($username, '@'));
+
+
+    $res = [];
+    foreach ($medias as $item){
+        // dd($item);
+        array_push($res, [
+            "img"=> $item['imageThumbnailUrl'],
+            "video"=> $item["videoStandardResolutionUrl"],
+            "caption" => $item['caption'],
+            "link"=> $item['link'],
+        ]);
+    }
+            
+    return json_encode(collect($res)->take(5));
+});
