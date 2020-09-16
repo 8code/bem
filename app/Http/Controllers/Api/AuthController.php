@@ -17,6 +17,29 @@ class AuthController extends Controller
 
 
 
+    // public function registerByEmail(Request $request)
+    // {
+        
+    //     $validatedData = $request->validate([
+    //         'avatar' => "/icon.png",
+    //         'username' => 'string|required|unique:users',
+    //         'name' => 'required|max:55',
+    //         'email' => 'email|required|unique:users',
+    //         'password' => 'required'
+    //     ]);
+
+    //     $validatedData['password'] = bcrypt($request->password);
+
+    //     $user = User::create($validatedData);
+
+    //     $user->markEmailAsVerified();
+        
+
+    //     $accessToken = $user->createToken('authToken')->accessToken;
+
+    //     return response([ 'user' => $user, 'access_token' => $accessToken]);
+    // }
+
     public function loginfb(Request $request)
     {
         
@@ -40,7 +63,7 @@ class AuthController extends Controller
 
             $user = new User;
             $user->fb_id = $cek->id;
-            $user->username = $cek->id;
+            $user->username = rand(1000,100000);
             $user->name = $cek->name;
             $user->avatar = 'https://graph.facebook.com/'.$cek->id.'/picture';
             $user->password = Hash::make("xpas-gen".time());

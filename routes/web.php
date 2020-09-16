@@ -22,7 +22,6 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
 Route::get('/api/instagram/{username}', function ($username) {
 
 
@@ -34,12 +33,15 @@ Route::get('/api/instagram/{username}', function ($username) {
     foreach ($medias as $item){
         // dd($item);
         array_push($res, [
-            "img"=> $item['imageThumbnailUrl'],
+            "thumb"=> $item['imageThumbnailUrl'],
             "video"=> $item["videoStandardResolutionUrl"],
-            "caption" => $item['caption'],
+            "text" => $item['caption'],
             "link"=> $item['link'],
         ]);
     }
             
-    return json_encode(collect($res)->take(5));
+    return json_encode(collect($res)->take(6));
 });
+
+
+

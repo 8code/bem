@@ -7,6 +7,7 @@ use App\qna as MetDa;
 use App\qna_follow;
 use Auth;
 use App\group_follow;
+use App\user_follow;
 use App\qna;
 use App\group;
 use App\User;
@@ -36,10 +37,12 @@ class qnaController extends Controller
             
                     
                     $following = group_follow::where("user_id",Auth::id())->pluck("group_id")->toArray();
+                    $following_user = user_follow::where("user_id",Auth::id())->pluck("followed_id")->toArray();
 
                     
                     $metda = qna::orderBy("id","DESC")
                         ->whereIn("group_id",$following)
+                        ->OrWhereIn("user_id",$following_user)
                         ->whereRaw($filterSearch)
                         ->with("group")
                         ->with("user")
@@ -148,10 +151,8 @@ class qnaController extends Controller
 
                 $dataAct = [
                     "user_id" => Auth::id(),
-                    "quest_user_id" => $id,
-                    "quest_group_id" => null,
+                    "quest_id" => $id,
                     "tipe" => 1,
-                    "activity" => "@".Auth::user()->username." Menyukai Quest Anda",
                     "link" => "/quest/$id",
                 ];
                 activity::create($dataAct);
@@ -182,95 +183,124 @@ class qnaController extends Controller
 
 
       
-        // try {
+        try {
             if(Auth::id()){
 
                 $metda = new MetDa;
-                $metda->text = $req->text;
-                $metda->audio = $req->audio;
-                $metda->quest_id = $req->quest_id;
-                $metda->group_id = $req->group_id;
+               
+                if($req->quest_id){
+                    $metda->quest_id = $req->quest_id;
+                }
+                if($req->group_id){
+                    $metda->group_id = $req->group_id;
+                }
+                $metda->text =  preg_replace('/\s+/',' ',$req->text);
+
+                if($req->audio){
+                    $metda->audio =  $req->audio;
+                }
+                if($req->embed){
+                    $metda->embed = $req->embed;
+                }
+                if($req->thumb){
+                    $metda->thumb = $req->thumb;
+                }
+                if($req->img){
+                    $metda->img = $req->img;
+                    $metda->thumb = "";
+                }
+                if($req->video){
+                    $metda->video = $req->video;
+                }
                 $metda->user_id = Auth::id();
                 $metda->save();
 
 
-                $update = qna::find($req->quest_id);
+                if($req->quest_id){
+                    $update = qna::find($req->quest_id);
 
-                if($update){
-                    $update->total_qna = qna::where("quest_id",$req->quest_id)->count();
+                    if($update){
+                        $update->total_qna = qna::where("quest_id",$req->quest_id)->count();
+        
+                        $update->total_follower = qna_follow::where("quest_id",$req->quest_id)->count();
+            
+                        $update->activity = $update->total_qna + $update->total_follower;
+            
+                        $update->update();
+                        
+                            $dataAct = [
+                                "user_id" => Auth::id(),
+                                "quest_id" => $req->quest_id,
+                                "group_id" => $metda->group_id,
+                                "quest_balas_id" => $metda->id,
+                                "tipe" => 2,
+                                "link" => "/quest/$metda->id",
+                            ];
+                            activity::create($dataAct);
     
-                    $update->total_follower = qna_follow::where("quest_id",$req->quest_id)->count();
-        
-                    $update->activity = $update->total_qna + $update->total_follower;
-        
-                    $update->update();
-
-                    
-                        $dataAct = [
-                            "user_id" => Auth::id(),
-                            "quest_user_id" => $req->quest_id,
-                            "quest_group_id" => null,
-                            "tipe" => 2,
-                            "activity" => "@".Auth::user()->username." Membalas Quest Anda",
-                            "link" => "/quest/$req->quest_id",
-                        ];
-                        activity::create($dataAct);
-
+                    }
                 }
+              
 
-                 $updateg = group::find($req->group_id);
-                 
-                if($updateg){
-                    $updateg->last_active= strtotime($metda->created_at);
-                    
-                    $updateg->update();
+                if($req->group_id){
+                    $updateg = group::find($req->group_id);
+                       
+                    if($updateg){
+                        $updateg->last_active= strtotime($metda->created_at);
+                        $updateg->update();
+                    }
                 }
+              
 
 
                 if($req->text){
                     $textToArray =  explode(" ",$req->text);
 
-
-                    
-
                     foreach($textToArray as $text){
                         if(substr($text, 0, 1) == "@"){
-
-                            // return json_encode($text);
-
                            
                             // Mentions
                             $dataAct0 = [
                                 "user_id" => Auth::id(),
-                                "quest_user_id" => $req->quest_id,
-                                "quest_group_id" => null,
+                                "quest_id" => $metda->id,
                                 "tipe" => 3,
-                                "activity" => "@".Auth::user()->username." Mention Anda",
-                                "link" => "/quest/$req->quest_id",
+                                "link" => "/quest/$metda->id",
                                 "mention" => $text,
                             ];
 
                             activity::create($dataAct0);
 
 
+                        }else if(substr($text, 0, 1) == "#"){
+
+                             // Tagar
+                             $dataAct0 = [
+                                "user_id" => Auth::id(),
+                                "quest_id" => $metda->id,
+                                "tipe" => 4,
+                                "link" => "",
+                                "tagar" => $text,
+                            ];
+
+                            activity::create($dataAct0);
+
                         }
                     }
 
                 }
-            
-                        
 
                 return response()->json([
-                    'success' => true
+                    'success' => true,
+                    'id'=> $metda->id
                 ]);
              }
-        // } catch (\Throwable $th) {
+        } catch (\Throwable $th) {
 
-        //     return response()->json([
-        //         'success' => false,
-        //         'data'=> $th
-        //     ]);
-        // }
+            return response()->json([
+                'success' => false,
+                'data'=> $th
+            ]);
+        }
        
         
     }

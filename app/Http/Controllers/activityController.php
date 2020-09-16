@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\activity;
+use App\qna;
 
 class activityController extends Controller
 {
@@ -15,29 +16,33 @@ class activityController extends Controller
 
                   
             $skip = 0;
-            $take = 5;
+            $take = 15;
 
             if($req->page > 1){
                 $skip = $take * $req->page-1;
             }
 
-           // 1 Menyukai Quest, 2 Membalas Quest , 3 Admin Membuat Quest , 4 Memfollow Akun
 
-                      $act = activity::
-                         leftJoin("qnas as quest","quest.id","activities.quest_user_id")
-                         ->leftJoin("users as user","quest.user_id","user.id")
-                        ->where("quest.user_id",Auth::id())
-                        ->orWhere("activities.mention","like",Auth::id())
-                        ->select("activities.*","quest.text","user.avatar")
-                        ->skip($skip)->take($take)
-                        ->orderBy("id","DESC")
-                        ->get();
+            $act = activity::
+                leftJoin("qnas as quest","quest.id","activities.quest_id")
+                ->leftJoin("users as user","quest.user_id","user.id")
+                ->where("quest.user_id",Auth::id())
+                ->Where("activities.tipe","!=",4)
+                ->orWhere("activities.mention","like",Auth::id())
+                ->select("activities.*","quest.text","user.avatar","user.username")
+                ->skip($skip)->take($take)
+                ->orderBy("id","DESC")
+                ->get();
 
             $res  = $act
                 ->map(function ($da){
-                    $da->total = activity::where("quest_user_id",$da->quest_user_id)->count();
+                    $balas = qna::find($da->quest_balas_id);
+                    if($balas){
+                        $da->balasan = $balas->text;
+                    }
+                    $da->total = activity::where("quest_id",$da->quest_id)->count();
                     return $da;
-                });
+            });
 
             return $res;
         }

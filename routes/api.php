@@ -57,11 +57,22 @@ Route::post('update-profile','profileController@updateProfile');
 
     Route::get('quest/balasan/{id}','qnaController@questBalasan');
 
+// User    
+Route::get('user/follow/{id}','userController@follow');
+
+
 
 // Helper
 Route::get('list-prodi','helperController@listProdi');
 Route::get('list-univ','helperController@listUniv');
 
+
+
+// Populer
+
+Route::get("tagar-populer", "populerController@tagar");
+Route::get("group-populer", "populerController@group");
+Route::get("user-populer", "populerController@user");
 
 
 

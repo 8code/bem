@@ -8,7 +8,9 @@ use Auth;
 use App\group_follow;
 use App\qna;
 use App\qna_follow;
+use App\user_follow;
 use Storage;
+use Illuminate\Support\Facades\Hash;
 
 class profileController extends Controller
 {
@@ -57,6 +59,9 @@ class profileController extends Controller
 
                     $data->avatar = env("APP_URL")."/storage/".$imageName;
                 }
+                if($req->password){
+                    $data->password = Hash::make($req->password);
+                }
 
                 $data->name = $req->name;
                 $data->gender = $req->gender;
@@ -84,8 +89,19 @@ class profileController extends Controller
             }
         }
     }
-    public function profile($id){
-        return User::where("username",ltrim($id, '@'))->first();
+    public function profile($uname){
+         $user = User::where("username",ltrim($uname, '@'))->first();
+
+        $follow = user_follow::
+            where("user_id",Auth::id())
+            ->where("followed_id",$user->id)
+            ->first();
+
+        if($follow){
+            $user->followed = true;
+        }
+        
+        return $user;
     }
 
     public function profileById($id){
@@ -110,9 +126,9 @@ class profileController extends Controller
                         if($req->filter == 'Quest Only'){
                             $filterType = " quest_id is null";
                         }else if($req->filter == 'Quest & Balasan'){
-                            $filterType = 'audio != ""';
+                            $filterType = 'text != ""';
                         }else if($req->filter == 'Media'){
-                            $filterType = 'audio != ""';
+                            $filterType = ' (img != "" OR video != "" OR embed != "")';
                         }else{
                             $filterType = 'id';
                         }

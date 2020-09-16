@@ -27,15 +27,20 @@ class groupController extends Controller
                     }
 
                
+                    $group = Metda::find($id);
 
                     if($req->filter){
                         if($req->filter == 'Quest Only'){
                             $filterType = " quest_id is null";
-                        }else if($req->filter == 'Quest & Balasan'){
-                            $filterType = 'audio != ""';
-                        }else if($req->filter == 'Media'){
-                            $filterType = 'audio != ""';
-                        }else{
+                        }
+                   
+                        
+                        else if($req->filter == 'Media'){
+                            $filterType = ' (img != "" OR video != "" OR embed != "")';
+                        } else if($req->filter == 'Tagar'){
+                            $filterType = ' (text like "%#'.$group->username.'%")';
+                        }
+                        else{
                             $filterType = 'id';
                         }
                     }else{
@@ -190,6 +195,9 @@ class groupController extends Controller
     {
         try {
             $metda = MetDa::create($request->all());
+
+            // dd($metda);
+            
             return response()->json([
                 'success' => true
             ]);

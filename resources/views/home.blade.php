@@ -13,9 +13,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    Nama : {{ '@'. Auth::user()->name }}
+                    Nama : {{ Auth::user()->name }}
                     <br>
-                    Email : {{ '@'. Auth::user()->email }}
+                    Email : {{ Auth::user()->email }}
                     <br>
                     Username : {{ '@'. Auth::user()->username }}
                     <br>

@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->date('birthday')->nullable();
             $table->string('gender',10)->nullable();
             $table->string('study_program')->nullable();
+            $table->integer('angkatan')->nullable();
             $table->string('university')->default('Universitas Siliwangi');
             $table->timestamp('email_verified_at')->nullable();
             $table->boolean('admin')->default(0);

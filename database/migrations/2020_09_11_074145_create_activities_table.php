@@ -16,12 +16,13 @@ class CreateActivitiesTable extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->integer("user_id");
-            $table->integer("quest_user_id");
-            $table->integer("quest_group_id")->nullable(); // Khusus Info dari Admin Group
-            $table->integer("tipe"); // 1 Menyukai Quest, 2 Membalas Quest , 3 Mentions Akun, 4 Admin Membuat Quest , 5 Memfollow Akun
-            $table->string("activity"); // Text "@admin Membuat Quest 'Ini Peryaratan Buat Ombus Fakultas Ya' "
-            $table->string("link"); // Link Menuju Quest
-            $table->string("mention");
+            $table->integer("quest_id")->nullable();
+            $table->integer("quest_balas_id")->nullable();
+            $table->integer("tipe"); // 0 Melihat, 1 Menyukai, 2 Membalas , 3 Mentions, 4 Mentag, 5 Admin Membuat Quest , 6 Memfollow Akun, 7 Memfollow Group
+            $table->string("link")->nullable(); // Link Menuju Quest
+            $table->string("mention")->nullable();
+            $table->string("tagar")->nullable();
+            $table->string("group_id")->nullable();
             $table->timestamps();
         });
     }
