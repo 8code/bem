@@ -61,13 +61,20 @@ class AuthController extends Controller
         }else{
             // Register User
 
+
+            if(isset($cek->email)){
+                $email = $cek->email;
+            }else{
+                $email = $cek->id."@example.com";
+            }
+            
             $user = new User;
             $user->fb_id = $cek->id;
             $user->username = rand(1000,100000);
             $user->name = $cek->name;
             $user->avatar = 'https://graph.facebook.com/'.$cek->id.'/picture';
             $user->password = Hash::make("xpas-gen".time());
-            $user->email = $cek->email;
+            $user->email = $email;
             $user->email_verified_at = date("Y-m-d H:i:s");
             $user->save();
 
