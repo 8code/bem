@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Activity;
+use App\activity;
 use App\group;
 use App\User;
 use DB;
@@ -21,7 +21,7 @@ class populerController extends Controller
         $year = Carbon::now()->format('Y-m-d');
 
         
-        $tagar = Activity::
+        $tagar = activity::
          select('tagar', DB::raw('count(*) as total'))
         ->groupBy('tagar')
         ->orderBy("total","DESC")
@@ -30,7 +30,7 @@ class populerController extends Controller
         ->get();
 
         if(!$tagar){
-            $tagar = Activity::
+            $tagar = activity::
                 select('tagar', DB::raw('count(*) as total'))
             ->groupBy('tagar')
             ->orderBy("total","DESC")
@@ -40,7 +40,7 @@ class populerController extends Controller
         }
 
         if(!$tagar){
-            $tagar = Activity::
+            $tagar = activity::
             select('tagar', DB::raw('count(*) as total'))
            ->groupBy('tagar')
            ->orderBy("total","DESC")
@@ -67,7 +67,7 @@ class populerController extends Controller
         $year = Carbon::now()->format('Y-m-d');
 
         
-        $user = Activity::
+        $user = activity::
          select('user_id', DB::raw('count(*) as total'))
         ->groupBy('user_id')
         ->orderBy("total","DESC")
@@ -76,7 +76,7 @@ class populerController extends Controller
         ->get();
 
         if(!$user){
-            $user = Activity::
+            $user = activity::
             select('user_id', DB::raw('count(*) as total'))
             ->groupBy('user_id')
             ->orderBy("total","DESC")
@@ -86,7 +86,7 @@ class populerController extends Controller
         }
 
         if(!$user){
-            $user = Activity::
+            $user = activity::
             select('user_id', DB::raw('count(*) as total'))
            ->groupBy('user_id')
            ->orderBy("user","DESC")
