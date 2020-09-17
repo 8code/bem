@@ -216,6 +216,7 @@ class qnaController extends Controller
                 $metda->save();
 
 
+
                 if($req->quest_id){
                     $update = qna::find($req->quest_id);
 

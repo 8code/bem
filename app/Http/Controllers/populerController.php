@@ -16,9 +16,11 @@ class populerController extends Controller
     public function tagar(){
 
         // return "ss";
-        $day = Carbon::now()->format('Y-m-d');
-        $month = Carbon::now()->addMonth(1)->format('Y-m-d');
-        $year = Carbon::now()->format('Y-m-d');
+        $day = Carbon::now()->format('d');
+        $month = Carbon::now()->format('m');
+        $year = Carbon::now()->format('Y');
+
+        $date = $year."-".$month."-".$day;
 
         
         $tagar = activity::
@@ -26,26 +28,36 @@ class populerController extends Controller
         ->groupBy('tagar')
         ->orderBy("total","DESC")
         ->where("tagar","!=",null)
-        ->where('created_at',">=",$day)
+        ->where('created_at',">=",$date)
         ->get();
 
-        if(!$tagar){
+        if( count($tagar) == 0){
+            if($month == 1){
+                $year = $year-1;
+                $month = 12;
+            }else{
+                $month = $month-1;
+            }
+            
+            $date = $year."-".$month."-".$day;
+
             $tagar = activity::
-                select('tagar', DB::raw('count(*) as total'))
+            select('tagar', DB::raw('count(*) as total'))
             ->groupBy('tagar')
             ->orderBy("total","DESC")
             ->where("tagar","!=",null)
-            ->where('created_at',">=",$month)
+            ->where('created_at',">=",$date)
             ->get();
         }
 
-        if(!$tagar){
+        if(count($tagar) == 0){
+            $date = ($year-1)."-".$month."-".$day;
             $tagar = activity::
             select('tagar', DB::raw('count(*) as total'))
            ->groupBy('tagar')
            ->orderBy("total","DESC")
            ->where("tagar","!=",null)
-           ->where('created_at',">=",$year)
+           ->where('created_at',">=",$date)
            ->get();
         }
 

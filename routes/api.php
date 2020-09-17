@@ -75,6 +75,13 @@ Route::get("group-populer", "populerController@group");
 Route::get("user-populer", "populerController@user");
 
 
+// Search
+Route::get("search/quest/{keyword}", "searchController@quest");
+Route::get("search/group/{keyword}", "searchController@group");
+Route::get("search/user/{keyword}", "searchController@user");
+
+
+
 
 
 
