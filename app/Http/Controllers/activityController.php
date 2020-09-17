@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\activity;
 use App\qna;
+use App\User;
 
 class activityController extends Controller
 {
@@ -25,22 +26,25 @@ class activityController extends Controller
 
             $act = activity::
                 leftJoin("qnas as quest","quest.id","activities.quest_id")
-                ->leftJoin("users as user","quest.user_id","user.id")
+                ->leftJoin("users as user","activities.user_id","user.id")
                 ->where("quest.user_id",Auth::id())
                 ->Where("activities.tipe","!=",4)
                 ->orWhere("activities.mention","like",Auth::id())
                 ->select("activities.*","quest.text","user.avatar","user.username")
                 ->skip($skip)->take($take)
-                ->orderBy("id","DESC")
+                ->orderBy("activities.created_at","DESC")
                 ->get();
 
             $res  = $act
                 ->map(function ($da){
                     $balas = qna::find($da->quest_balas_id);
                     if($balas){
+                        $u = User::find($balas->user_id);
+                        $da->avatar = $u->avatar;
+                        $da->username = $u->username;
                         $da->balasan = $balas->text;
                     }
-                    $da->total = activity::where("quest_id",$da->quest_id)->count();
+                    $da->total = activity::where("quest_id",$da->quest_id)->where("tipe",$da->tipe)->count();
                     return $da;
             });
 
