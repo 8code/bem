@@ -71,7 +71,8 @@ class qnaController extends Controller
                     });
 
                     $respons = [
-                        "data" => $metda
+                        "data" => $metda,
+                        "total" => $metda->count()
                     ];
 
                     return response()->json($respons);
