@@ -218,8 +218,6 @@ class qnaController extends Controller
                 $metda->save();
 
 
-                event(new \App\Events\NewActivity("Haiii"));
-
 
 
                 if($req->quest_id){
