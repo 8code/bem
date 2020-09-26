@@ -17,6 +17,11 @@
 <script>
     export default {
         mounted() {
+            // Echo.private("activity")
+            //     .listen("NewActivity", res => {
+            //         console.log("hai")
+            //         console.log(res)
+            //     })
             console.log('Component mounted.')
         }
     }

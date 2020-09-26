@@ -28,6 +28,7 @@ class CreateQnasTable extends Migration
             $table->integer("total_qna")->default(0); // balas
             $table->integer("view")->default(0); // dilihat
             $table->integer("activity")->default(0);
+            $table->integer("type")->default(0);
             $table->timestamps();
         });
     }

@@ -10,6 +10,7 @@ use Auth;
 class userController extends Controller
 {
     //
+
     public function follow($id){
         if(Auth::id()){
             $cek = user_follow::where("user_id",Auth::id())->where("followed_id",$id)->first();

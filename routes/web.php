@@ -22,6 +22,8 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/fix-follow-my-account', 'helperController@fixFollowMyAccount');
+
 Route::get('/api/instagram/{username}', function ($username) {
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\user_follow;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -64,12 +65,30 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'avatar' => "/icon.png",
             'name' => $data['name'],
             'username' => rand(1000,100000),
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+
+        
+        $cek = user_follow::where("user_id",$user->id)->where("followed_id",$user->id)->first();
+        if(!$cek){
+            $follow = new user_follow;
+            $follow->user_id = $user->id;
+            $follow->followed_id = $user->id;
+            $follow->save();
+
+            $follow2 = new user_follow;
+            $follow2->user_id = $user->id;
+            $follow2->followed_id = 1;
+            $follow2->save();
+
+        }
+
+        return $user;
     }
 }

@@ -14,6 +14,7 @@ use App\User;
 use App\activity;
 
 
+
 class qnaController extends Controller
 {
 
@@ -215,6 +216,9 @@ class qnaController extends Controller
                 }
                 $metda->user_id = Auth::id();
                 $metda->save();
+
+
+                event(new \App\Events\NewActivity("Haiii"));
 
 
 

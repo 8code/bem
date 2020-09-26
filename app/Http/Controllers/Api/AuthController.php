@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\User;
+use App\user_follow;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 use Str;
@@ -16,29 +17,6 @@ class AuthController extends Controller
 {
 
 
-
-    // public function registerByEmail(Request $request)
-    // {
-        
-    //     $validatedData = $request->validate([
-    //         'avatar' => "/icon.png",
-    //         'username' => 'string|required|unique:users',
-    //         'name' => 'required|max:55',
-    //         'email' => 'email|required|unique:users',
-    //         'password' => 'required'
-    //     ]);
-
-    //     $validatedData['password'] = bcrypt($request->password);
-
-    //     $user = User::create($validatedData);
-
-    //     $user->markEmailAsVerified();
-        
-
-    //     $accessToken = $user->createToken('authToken')->accessToken;
-
-    //     return response([ 'user' => $user, 'access_token' => $accessToken]);
-    // }
 
     public function loginfb(Request $request)
     {
@@ -80,9 +58,28 @@ class AuthController extends Controller
 
 
             if(Auth::loginUsingId($user->id)){
+
+               
+                    $cek = user_follow::where("user_id",auth()->id())->where("followed_id",auth()->id())->first();
+                    if(!$cek){
+                        $follow = new user_follow;
+                        $follow->user_id = auth()->id();
+                        $follow->followed_id = auth()->id();
+                        $follow->save();
+
+                        $follow2 = new user_follow;
+                        $follow2->user_id = auth()->id();
+                        $follow2->followed_id = 1;
+                        $follow2->save();
+        
+        
+                    }
+
                 // Success
                 $accessToken = auth()->user()->createToken('authToken')->accessToken;
                 return response()->json(['user' => auth()->user(), 'access_token' => $accessToken]);
+
+                
             }
 
             

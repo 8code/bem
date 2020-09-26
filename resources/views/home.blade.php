@@ -8,6 +8,8 @@
                 <div class="card-header">Info Akun Anda</div>
 
                 <div class="card-body">
+
+                    <example-component />
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
