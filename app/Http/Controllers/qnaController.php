@@ -13,6 +13,7 @@ use App\group;
 use App\User;
 use App\activity;
 
+use Storage;
 
 
 class qnaController extends Controller
@@ -193,6 +194,11 @@ class qnaController extends Controller
                 if($req->quest_id){
                     $metda->quest_id = $req->quest_id;
                 }
+
+                if($req->type){
+                    $metda->type = $req->type;
+                }
+
                 if($req->group_id){
                     $metda->group_id = $req->group_id;
                 }
@@ -208,7 +214,23 @@ class qnaController extends Controller
                     $metda->thumb = $req->thumb;
                 }
                 if($req->img){
-                    $metda->img = $req->img;
+                
+                    $image_64 = $req->img; //your base64 encoded data
+            
+                    $replace = substr($image_64, 0, strpos($image_64, ',')+1); 
+            
+                    // find substring fro replace here eg: data:image/png;base64,
+            
+                    $image = str_replace($replace, '', $image_64); 
+            
+                    $image = str_replace(' ', '+', $image); 
+            
+                    $imageName = Auth::id() ."/". time().'.png';
+            
+                    Storage::disk('public')->put($imageName, base64_decode($image));
+
+                    $metda->img = env("APP_URL")."/storage/".$imageName;
+
                     $metda->thumb = "";
                 }
                 if($req->video){
