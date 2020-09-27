@@ -81,6 +81,14 @@ Route::get("search/group/{keyword}", "searchController@group");
 Route::get("search/user/{keyword}", "searchController@user");
 
 
+// Quest Donations
+
+Route::get('donations', "donationController@questDonations");
+
+// Quest Events
+
+Route::get('events', "eventController@questEvents");
+
 
 
 

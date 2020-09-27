@@ -4,10 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\donation as MetDa;
+use App\qna;
 
 
 class donationController extends Controller
 {
+
+
+    public function questDonations()
+    {
+        $data =  qna::where("type",3)
+        ->with("group")
+        ->with("user")
+        ->with("quest")
+        ->where("quest_id",null)
+        ->orderBy("activity","DESC")
+        ->orderBy("id","DESC")
+        ->where("status",1)->get()->take(10);
+        return $data;
+    }
 
     public function index()
     {

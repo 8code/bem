@@ -4,10 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\event as MetDa;
-
+use App\qna;
 
 class eventController extends Controller
 {
+
+
+    public function questEvents()
+    {
+        $data =  qna::where("type",2)
+        ->with("group")
+        ->with("user")
+        ->with("quest")
+        ->where("quest_id",null)
+        ->orderBy("activity","DESC")
+        ->orderBy("id","DESC")
+        ->where("status",1)->get()->take(10);
+        return $data;
+    }
 
     public function index()
     {

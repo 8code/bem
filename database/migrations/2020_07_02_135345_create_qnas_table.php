@@ -29,6 +29,7 @@ class CreateQnasTable extends Migration
             $table->integer("view")->default(0); // dilihat
             $table->integer("activity")->default(0);
             $table->integer("type")->default(0);
+            $table->integer("status")->default(1); // 0 Draf, 1 active, 2 Selesai (Donasi,Event)
             $table->timestamps();
         });
     }
