@@ -26,7 +26,7 @@ class AuthController extends Controller
         $cek = json_decode($res->getBody()); 
         
         if(!isset($cek->id)){
-            return response()->json(['message' => 'Invalid Credentials']);
+            return response()->json(['message' => 'Akun tidak ditemukan']);
         }
 
         $user = User::where("fb_id",$request->userID)->first();
@@ -108,7 +108,7 @@ class AuthController extends Controller
         }
 
         if (!Auth::check() ) {
-            return response()->json(['message' => 'Invalid Credentials']);
+            return response()->json(['message' => 'Akun tidak ditemukan']);
         }
 
         $accessToken = auth()->user()->createToken('authToken')->accessToken;

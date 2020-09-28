@@ -62,12 +62,12 @@ class populerController extends Controller
         }
 
         
-        return $tagar->take(3);
+        return $tagar->take(5);
     }
 
 
     public function group(){
-        return group::orderBy("last_active","DESC")->get()->take(3);
+        return group::orderBy("last_active","DESC")->get()->take(5);
     }
 
 
@@ -108,7 +108,7 @@ class populerController extends Controller
         }
 
         
-        return $user->take(3)->map(function($u) {
+        return $user->take(5)->map(function($u) {
             $u->user = User::find($u->user_id);
             return $u;
         });
