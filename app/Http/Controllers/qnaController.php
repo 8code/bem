@@ -134,8 +134,8 @@ class qnaController extends Controller
                     
 
                     $respons = [
-                        
-                        "data" => $metda->skip($skip)->take($take)->toArray()
+                        "data" => $metda->skip($skip)->take($take)->toArray(),
+                        "total" => count($metda->skip($skip)->take($take)->toArray())
                     ];
 
                     return response()->json($respons);
