@@ -85,7 +85,7 @@ class qnaController extends Controller
         if(Auth::id()){
                 
                     $skip = 0;
-                    $take = 5;
+                    $take = 9;
 
                     if($req->page > 1){
                         $skip = $take * $req->page-1;
@@ -131,11 +131,13 @@ class qnaController extends Controller
                         
                     });
 
+                    $res = collect($metda)->skip($skip)->take($take)->toArray();
+
                     
 
                     $respons = [
-                        "data" => $metda->skip($skip)->take($take)->toArray(),
-                        "total" => count($metda->skip($skip)->take($take)->toArray())
+                        "data" => $res,
+                        "total" => count($res)
                     ];
 
                     return response()->json($respons);
