@@ -75,9 +75,9 @@ class populerController extends Controller
     public function user(){
 
         // return "ss";
-        $day = Carbon::now()->format('Y-m-d');
-        $month = Carbon::now()->addMonth(1)->format('Y-m-d');
-        $year = Carbon::now()->format('Y-m-d');
+        $day = Carbon::now()->format('d');
+        $month = Carbon::now()->addMonth(1)->format('m');
+        $year = Carbon::now()->format('Y');
 
         
         $user = activity::
@@ -85,7 +85,7 @@ class populerController extends Controller
         ->groupBy('user_id')
         ->orderBy("total","DESC")
         ->where("user_id","!=",null)
-        ->where('created_at',">=",$day)
+        ->whereRaw('DAY(created_at) >= '.$day.'')
         ->get();
 
         if(count($user) < 5){
@@ -94,7 +94,7 @@ class populerController extends Controller
             ->groupBy('user_id')
             ->orderBy("total","DESC")
             ->where("user_id","!=",null)
-            ->where('created_at',">=",$month)
+            ->whereRaw('MONTH(created_at) >= '.$month.'')
             ->get();
         }
 
@@ -104,7 +104,7 @@ class populerController extends Controller
            ->groupBy('user_id')
            ->orderBy("total","DESC")
            ->where("user_id","!=",null)
-           ->where('created_at',">=",$year)
+           ->whereRaw('YEAR(created_at) >= '.$year.'')
            ->get();
         }
 
