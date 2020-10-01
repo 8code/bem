@@ -70,6 +70,7 @@ class profileController extends Controller
                 $data->angkatan = $req->angkatan;
                 $data->instagram = $req->instagram;
                 $data->whatsapp = $req->whatsapp;
+                $data->bio = $req->bio;
 
                 $data->save();
 
@@ -100,6 +101,19 @@ class profileController extends Controller
         if($follow){
             $user->followed = true;
         }
+
+        $user->follower = user_follow::
+            where("followed_id",$user->id)
+            ->count("id");
+
+        $user->following = user_follow::
+            where("user_id",$user->id)
+            ->count("id");
+
+        
+
+        
+
         
         return $user;
     }

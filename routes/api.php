@@ -59,6 +59,7 @@ Route::post('update-profile','profileController@updateProfile');
 
 // User    
 Route::get('user/follow/{id}','userController@follow');
+Route::get('users','userController@index');
 
 
 

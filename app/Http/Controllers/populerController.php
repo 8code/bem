@@ -8,7 +8,8 @@ use App\group;
 use App\User;
 use DB;
 use Illuminate\Support\Carbon;
-
+use App\user_follow;
+use Auth;
 
 class populerController extends Controller
 {
@@ -80,16 +81,16 @@ class populerController extends Controller
 
         
         $user = activity::
-         select('user_id', DB::raw('count(*) as total'))
+         select('user_id', DB::raw('count(user_id) as total'))
         ->groupBy('user_id')
         ->orderBy("total","DESC")
         ->where("user_id","!=",null)
         ->where('created_at',">=",$day)
         ->get();
 
-        if(!$user){
+        if(count($user) < 5){
             $user = activity::
-            select('user_id', DB::raw('count(*) as total'))
+            select('user_id', DB::raw('count(user_id) as total'))
             ->groupBy('user_id')
             ->orderBy("total","DESC")
             ->where("user_id","!=",null)
@@ -97,11 +98,11 @@ class populerController extends Controller
             ->get();
         }
 
-        if(!$user){
+        if(count($user) < 5 ){
             $user = activity::
-            select('user_id', DB::raw('count(*) as total'))
+            select('user_id', DB::raw('count(user_id) as total'))
            ->groupBy('user_id')
-           ->orderBy("user","DESC")
+           ->orderBy("total","DESC")
            ->where("user_id","!=",null)
            ->where('created_at',">=",$year)
            ->get();
@@ -110,6 +111,15 @@ class populerController extends Controller
         
         return $user->take(5)->map(function($u) {
             $u->user = User::find($u->user_id);
+            
+            $follow = user_follow::
+                where("user_id",Auth::id())
+                ->where("followed_id",$u->user_id)
+                ->first();
+
+            if($follow){
+                $u->user->followed = true;
+            }
             return $u;
         });
     }
