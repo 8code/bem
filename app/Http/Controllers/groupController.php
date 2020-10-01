@@ -163,6 +163,7 @@ class groupController extends Controller
 
         $respons = [
             "data" => $res,
+            "total" => count($res),
             "type" => $type
         ];
 
