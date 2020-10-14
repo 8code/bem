@@ -63,7 +63,7 @@ class populerController extends Controller
         }
 
         
-        return $tagar->take(10);
+        return $tagar->take(5);
     }
 
 

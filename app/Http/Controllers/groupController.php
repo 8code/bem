@@ -35,10 +35,10 @@ class groupController extends Controller
                         }
                    
                         
-                        else if($req->filter == 'Media'){
-                            $filterType = ' (img != "" OR video != "" OR embed != "")';
+                        else if($req->filter == 'Event'){
+                            $filterType = 'type == 2';
                         } else if($req->filter == 'Tagar'){
-                            $filterType = ' (text like "%#'.$group->username.'%")';
+                            $filterType = 'type == 3';
                         }
                         else{
                             $filterType = 'id';
@@ -154,11 +154,9 @@ class groupController extends Controller
         
             if($follow){
                 $g->followed = true;
-            }else{
-                return $g;
             }
 
-            return "";
+            return $g;
             
         });
 
