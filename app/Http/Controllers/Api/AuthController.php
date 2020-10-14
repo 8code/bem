@@ -116,6 +116,8 @@ class AuthController extends Controller
         return response()->json(['user' => auth()->user(), 'access_token' => $accessToken]);
 
     }
+
+    
     public function uploadImage(Request $req){
         if(Auth::id()){
             $image_64 = $req->image; 

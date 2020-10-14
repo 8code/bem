@@ -31,7 +31,7 @@ class searchController extends Controller
                     ->with("user")
                     ->with("quest")
                     ->where("text","like","%".$keyword."%")
-                    ->orderBy("activity","DESC")
+                    // ->orderBy("activity","DESC")
                     ->orderBy("id","DESC")
                     ->take(100)
                     ->get();

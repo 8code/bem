@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::post('/loginfb', 'Api\AuthController@loginfb');
+
 Route::post('/login', 'Api\AuthController@login');
 
 

@@ -154,9 +154,11 @@ class groupController extends Controller
         
             if($follow){
                 $g->followed = true;
+            }else{
+                return $g;
             }
 
-            return $g;
+            return "";
             
         });
 
