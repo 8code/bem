@@ -12,6 +12,7 @@ use App\qna;
 use App\group;
 use App\User;
 use App\activity;
+use App\event;
 
 use Storage;
 
@@ -239,7 +240,40 @@ class qnaController extends Controller
                     $metda->video = $req->video;
                 }
                 $metda->user_id = Auth::id();
+
+                if($req->desc){
+                    $metda->desc = $req->desc;
+                }
+
+                if($req->price){
+                    $metda->price = $req->price;
+                }
+
                 $metda->save();
+
+
+                if($req->type == 2){
+                    // Event
+                    $newEvent = new event;
+                    $newEvent->name = $req->text;
+                    $newEvent->image = $metda->img;
+                    $newEvent->desc = $metda->desc;
+                    $newEvent->price = $req->price;
+                    $newEvent->start = $req->start;
+                    $newEvent->end = $req->end;
+                    $newEvent->group_id = $metda->group_id;
+                    $newEvent->user_id = $metda->user_id;
+                    $newEvent->save();
+
+                    $update2 = MetDa::find($metda->id);
+
+                    $update2->event_id = $newEvent->id;
+
+                    $update2->save();
+                }
+               
+
+                
 
 
 
@@ -265,7 +299,6 @@ class qnaController extends Controller
                                 "link" => "/quest/$metda->id",
                             ];
                             activity::create($dataAct);
-    
                     }
                 }
               
@@ -316,6 +349,8 @@ class qnaController extends Controller
                     }
 
                 }
+
+              
 
                 return response()->json([
                     'success' => true,

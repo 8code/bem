@@ -17,11 +17,14 @@ class CreateQnasTable extends Migration
             $table->id();
             $table->integer("user_id");
             $table->string("text",255);
+            $table->longText("desc",255)->nullable();
             $table->string("thumb")->nullable(); // Jika Video
             $table->string("embed")->nullable(); // Embed youtube / spotify
             $table->string("img")->nullable(); 
             $table->string("video")->nullable();
             $table->string("audio")->nullable();
+            $table->integer("price")->default(0);
+            $table->integer("event_id")->nullable();
             $table->integer("group_id")->nullable();
             $table->integer("quest_id")->nullable();
             $table->integer("total_follower")->default(0); // like

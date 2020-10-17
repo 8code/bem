@@ -5,11 +5,77 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\event as MetDa;
 use App\qna;
+use App\qna_follow;
+use Auth;
+
 
 class eventController extends Controller
 {
 
 
+    public function joinEvent($id){
+
+    }
+
+    public function event_explore(Request $req){
+        if(Auth::id()){
+                
+            $skip = 0;
+            $take = 9;
+
+            if($req->page > 1){
+                $skip = $take * $req->page-1;
+            }
+
+            if($req->search){
+                $filterSearch = "text like '%".$req->search."%'";
+            }else{
+                $filterSearch = "id != ''";
+            }
+    
+            
+            $metda = qna::whereRaw($filterSearch)
+                ->with("group")
+                ->with("user")
+                ->with("quest")
+                ->where("type",2)
+                ->where("quest_id",null)
+                ->orderBy("activity","DESC")
+                ->orderBy("id","DESC")
+                ->take(100)
+                ->get();
+
+
+
+            $metda->map(function($q) {
+
+                if($q->quest){
+
+                    $q->membalas_user = User::find($q->quest->user_id)->username;
+                }
+
+
+                $follow = qna_follow::
+                    where("user_id",Auth::id())
+                    ->where("quest_id",$q->id)
+                    ->first();
+
+                if($follow){
+                    $q->followed = true;
+                }
+                
+            });
+
+            $res = collect($metda)->skip($skip)->take($take)->toArray();
+
+            $respons = [
+                "data" => $res,
+                "total" => count($res)
+            ];
+
+            return response()->json($respons);
+}
+    }
     public function questEvents()
     {
         $data =  qna::where("type",2)

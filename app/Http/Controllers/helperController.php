@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\user_follow;
+use App\group_follow;
 use Auth;
 
 class helperController extends Controller
@@ -22,9 +23,10 @@ class helperController extends Controller
     public function fixFollowMyAccount(){
      
 
-        if(Auth::user()->id == 1){
+        // if(Auth::user()->id == 1){
             $allUser = User::all();
             foreach($allUser as $user){
+                
                 $cek = user_follow::where("user_id",$user->id)->where("followed_id",$user->id)->first();
                 if(!$cek){
                     $follow = new user_follow;
@@ -34,7 +36,7 @@ class helperController extends Controller
     
                 }
     
-                $cek = user_follow::where("user_id",$user->id)->where("followed_id",6)->first();
+                $cek2 = user_follow::where("user_id",$user->id)->where("followed_id",6)->first();
                 if(!$cek){
                     $follow2 = new user_follow;
                     $follow2->user_id = $user->id;
@@ -42,7 +44,18 @@ class helperController extends Controller
                     $follow2->save();
     
                 }
+    
+                $cek3 = group_follow::where("user_id",$user->id)->where("group_id",69)->first();
+                
+
+                if(!$cek3){
+                    // dd($cek);
+                    $follow3 = new group_follow;
+                    $follow3->user_id = $user->id;
+                    $follow3->group_id = 69;
+                    $follow3->save();
+                }
             }
-        }
+        // }
     }
 }
