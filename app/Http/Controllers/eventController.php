@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\event as MetDa;
 use App\qna;
 use App\qna_follow;
+use App\join_event;
 use Auth;
 
 
@@ -13,8 +14,35 @@ class eventController extends Controller
 {
 
 
-    public function joinEvent($id){
 
+    public function myEvent()
+    {
+        if(Auth::id()){
+            $join = join_event::where("user_id",Auth::id())->pluck("event_id")->toArray();
+
+            $metda = MetDa::whereIn("id",$join)->latest()->paginate(5);
+
+            return response($metda);
+        }
+    }
+
+    public function joinEvent($id){
+        if(Auth::id()){
+            $cek = join_event::where("user_id",Auth::id())->where("event_id",$id)->first();
+            if(!$cek){
+                $joinEvent = new join_event;
+                $joinEvent->user_id = Auth::id();
+                $joinEvent->event_id = $id;
+                $joinEvent->status = 0;
+                $joinEvent->price = 0;
+                $joinEvent->message = 0;
+                $joinEvent->save();
+                return "success";
+            }else{
+                return "success";
+            }
+          
+        }
     }
 
     public function event_explore(Request $req){
@@ -94,6 +122,7 @@ class eventController extends Controller
         $metda = MetDa::latest()->paginate(5);
         return response($metda);
     }
+
     public function create(Request $request)
     {
         try {

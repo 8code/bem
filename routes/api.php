@@ -92,7 +92,8 @@ Route::get('donations', "donationController@questDonations");
 Route::get('events', "eventController@questEvents");
 Route::get('event/explore','eventController@event_explore');
 
-Route::get('join-events/{id}', "eventController@joinEvent");
+Route::get('join-event/{id}', "eventController@joinEvent");
+Route::get('my-events', "eventController@myEvent");
 
 
 

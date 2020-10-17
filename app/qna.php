@@ -22,5 +22,9 @@ class qna extends Model
     {
         return $this->hasOne('App\qna', 'id', 'quest_id');
     }
+    public function event()
+    {
+        return $this->hasOne('App\event', 'id', 'event_id');
+    }
 
 }

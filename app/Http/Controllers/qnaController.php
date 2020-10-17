@@ -30,8 +30,6 @@ class qnaController extends Controller
                         $skip = $take * $req->page-1;
                     }
 
-               
-
                     if($req->search){
                         $filterSearch = "text like '%".$req->search."%'";
                     }else{
@@ -41,6 +39,7 @@ class qnaController extends Controller
                     
                     $following = group_follow::where("user_id",Auth::id())->pluck("group_id")->toArray();
                     $following_user = user_follow::where("user_id",Auth::id())->pluck("followed_id")->toArray();
+                    
 
                     
                     $metda = qna::orderBy("id","DESC")
@@ -50,6 +49,7 @@ class qnaController extends Controller
                         ->with("group")
                         ->with("user")
                         ->with("quest")
+                        ->orderBy("created_at","DESC")
                         ->skip($skip)->take($take)
                         ->get();
 
@@ -67,6 +67,19 @@ class qnaController extends Controller
                             ->where("quest_id",$q->id)
                             ->first();
 
+                        
+                                
+                        $dataAct = [
+                            "user_id" => Auth::id(),
+                            "quest_id" => $q->id,
+                            "tipe" => 0
+                        ];
+                        $cekView = activity::where("user_id",Auth::id())->where("quest_id",$q->id)->first();
+
+                        if(!$cekView){
+                                activity::create($dataAct);
+                        }
+                            
                         if($follow){
                             $q->followed = true;
                         }
@@ -84,15 +97,16 @@ class qnaController extends Controller
 
     public function quest_home_explore(Request $req){
         if(Auth::id()){
+                    
                 
+                   
                     $skip = 0;
-                    $take = 9;
+                    $take = 5;
 
                     if($req->page > 1){
                         $skip = $take * $req->page-1;
                     }
 
-               
 
                     if($req->search){
                         $filterSearch = "text like '%".$req->search."%'";
@@ -100,16 +114,31 @@ class qnaController extends Controller
                         $filterSearch = "id != ''";
                     }
             
+                    $filterView = activity::where("user_id",Auth::id())->pluck("quest_id")->toArray();
+              
                     
                     $metda = qna::whereRaw($filterSearch)
                         ->with("group")
                         ->with("user")
                         ->with("quest")
                         ->where("quest_id",null)
+                        ->whereNotIn("id",$filterView)
                         ->orderBy("activity","DESC")
                         ->orderBy("id","DESC")
-                        ->take(100)
+                        ->skip($skip)->take($take)
                         ->get();
+                    
+                    if(count($metda) == 0){
+                        $metda = qna::whereRaw($filterSearch)
+                        ->with("group")
+                        ->with("user")
+                        ->with("quest")
+                        ->where("quest_id",null)
+                        ->orderBy("activity","DESC")
+                        ->orderBy("id","DESC")
+                        ->skip($skip)->take($take)
+                        ->get();
+                    }
 
 
 
@@ -129,10 +158,23 @@ class qnaController extends Controller
                         if($follow){
                             $q->followed = true;
                         }
+
+                        $dataAct = [
+                            "user_id" => Auth::id(),
+                            "quest_id" => $q->id,
+                            "tipe" => 0
+                        ];
+                        $cekView = activity::where("user_id",Auth::id())->where("quest_id",$q->id)->first();
+
+                        if(!$cekView){
+                                activity::create($dataAct);
+                        }
+
+
                         
                     });
 
-                    $res = collect($metda)->skip($skip)->take($take)->toArray();
+                    $res = collect($metda)->toArray();
 
                     
 
@@ -241,7 +283,7 @@ class qnaController extends Controller
                 }
                 $metda->user_id = Auth::id();
 
-                if($req->desc){
+                if($req->desc && $req->type != 2){
                     $metda->desc = $req->desc;
                 }
 
@@ -251,13 +293,12 @@ class qnaController extends Controller
 
                 $metda->save();
 
-
                 if($req->type == 2){
                     // Event
                     $newEvent = new event;
                     $newEvent->name = $req->text;
                     $newEvent->image = $metda->img;
-                    $newEvent->desc = $metda->desc;
+                    $newEvent->desc = $req->desc;
                     $newEvent->price = $req->price;
                     $newEvent->start = $req->start;
                     $newEvent->end = $req->end;
@@ -373,6 +414,7 @@ class qnaController extends Controller
         $metda = MetDa::with("group")
         ->with("user")
         ->with("quest")
+        ->with("event")
         ->find($id);
 
         if($metda->quest){
@@ -439,11 +481,10 @@ class qnaController extends Controller
                 ->with("user")
                 ->with("quest")
                 ->where("quest_id", $id)
-                ->orderBy("activity","DESC")
+                ->orderBy("created_at","DESC")
                 ->orderBy("id","DESC")
-                ->take(100)
+                ->skip($skip)->take($take)
                 ->get();
-
 
 
             $metda->map(function($q) {
@@ -467,8 +508,8 @@ class qnaController extends Controller
 
             return response()->json(
                 [
-                    "data"=> $metda->skip($skip)->take($take)->toArray(),
-                    "total" => count($metda->skip($skip)->take($take)->toArray())
+                    "data"=> $metda->toArray(),
+                    "total" => count($metda->toArray())
                 ]
             );
             

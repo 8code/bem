@@ -29,6 +29,7 @@ class activityController extends Controller
                 ->leftJoin("users as user","activities.user_id","user.id")
                 ->where("quest.user_id",Auth::id())
                 ->Where("activities.tipe","!=",4)
+                ->Where("activities.tipe","!=",0)
                 ->orWhere("activities.mention","like",Auth::id())
                 ->select("activities.*","quest.text","user.avatar","user.username")
                 ->skip($skip)->take($take)
