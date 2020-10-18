@@ -27,7 +27,7 @@ class qnaController extends Controller
                     $take = 8;
 
                     if($req->page > 1){
-                        $skip = $take * $req->page-1;
+                        $skip = ($take * $req->page-1)-1;
                     }
 
                     if($req->search){
@@ -50,7 +50,8 @@ class qnaController extends Controller
                         ->with("user")
                         ->with("quest")
                         ->orderBy("created_at","DESC")
-                        ->skip($skip)->take($take)
+                        ->skip($skip)
+                        ->take($take)
                         ->get();
 
 
@@ -104,7 +105,7 @@ class qnaController extends Controller
                     $take = 8;
 
                     if($req->page > 1){
-                        $skip = $take * $req->page-1;
+                        $skip = ($take * $req->page-1)-1;
                     }
 
 
