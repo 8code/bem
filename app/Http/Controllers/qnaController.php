@@ -30,22 +30,21 @@ class qnaController extends Controller
                         $skip = ($take * $req->page-1)-1;
                     }
 
-                    if($req->search){
-                        $filterSearch = "text like '%".$req->search."%'";
-                    }else{
-                        $filterSearch = "id != ''";
-                    }
+               
             
                     
                     $following = group_follow::where("user_id",Auth::id())->pluck("group_id")->toArray();
                     $following_user = user_follow::where("user_id",Auth::id())->pluck("followed_id")->toArray();
                     
 
+                    $filterView = activity::where("user_id",Auth::id())->pluck("quest_id")->toArray();
                     
                     $metda = qna::orderBy("id","DESC")
-                        ->whereIn("group_id",$following)
-                        ->OrWhereIn("user_id",$following_user)
-                        ->whereRaw($filterSearch)
+                        ->where(function($da) use ($following,$following_user) {
+                            $da->whereIn("group_id",$following);
+                            $da->orWhereIn("user_id",$following_user);
+                        })
+                        ->whereNotIn("id",$filterView)
                         ->with("group")
                         ->with("user")
                         ->with("quest")

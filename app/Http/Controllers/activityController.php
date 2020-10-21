@@ -36,20 +36,46 @@ class activityController extends Controller
                 ->orderBy("activities.created_at","DESC")
                 ->get();
 
-            $res  = $act
-                ->map(function ($da){
-                    $balas = qna::find($da->quest_balas_id);
-                    if($balas){
-                        $u = User::find($balas->user_id);
-                        $da->avatar = $u->avatar;
-                        $da->username = $u->username;
-                        $da->balasan = $balas->text;
-                    }
-                    $da->total = activity::where("quest_id",$da->quest_id)->where("tipe",$da->tipe)->count();
-                    return $da;
-            });
+            $filter = [];
 
-            return $res;
+            $likeCheck = [];
+            
+            foreach($act as $da){
+                $balas = qna::find($da->quest_balas_id);
+
+                if($balas){
+                    $u = User::find($balas->user_id);
+                    $da->avatar = $u->avatar;
+                    $da->username = $u->username;
+                    $da->balasan = $balas->text;
+                    $da->for_balasan = [
+                        "id"=> $balas->id,
+                        "user"=> [
+                            "username"=> $u->username
+                        ],
+                    ];
+                }
+
+                $da->total = activity::where("quest_id",$da->quest_id)->where("tipe",$da->tipe)->count();
+
+                if($da->tipe == 1){
+                    
+                    // cek filter like
+                    if(in_array($da->quest_id, $likeCheck)){
+                        // return "tess";
+                    }else{
+                        array_push($likeCheck, $da->quest_id);  
+                                              
+                        array_push($filter, $da);
+                    }
+
+                }else{
+                    array_push($filter, $da);
+                }
+               
+            }
+
+            return $filter;
         }
     }
 }
