@@ -37,14 +37,14 @@ class qnaController extends Controller
                     $following_user = user_follow::where("user_id",Auth::id())->pluck("followed_id")->toArray();
                     
 
-                    $filterView = activity::where("user_id",Auth::id())->pluck("quest_id")->toArray();
+                    // $filterView = activity::where("user_id",Auth::id())->pluck("quest_id")->toArray();
                     
                     $metda = qna::orderBy("id","DESC")
                         ->where(function($da) use ($following,$following_user) {
                             $da->whereIn("group_id",$following);
                             $da->orWhereIn("user_id",$following_user);
                         })
-                        ->whereNotIn("id",$filterView)
+                        // ->whereNotIn("id",$filterView)
                         ->with("group")
                         ->with("user")
                         ->with("quest")
@@ -277,6 +277,16 @@ class qnaController extends Controller
                     $metda->img = env("APP_URL")."/storage/".$imageName;
 
                     $metda->thumb = "";
+                }
+                if($req->audio){
+                
+                    $audio = base64_decode($req->audio);
+                    $audioName = Auth::id() ."/audio/". time().'.mp3';
+            
+                    Storage::disk('public')->put($audioName, base64_decode($audio));
+
+                    $metda->audio = env("APP_URL")."/storage/".$audioName;
+    
                 }
                 if($req->video){
                     $metda->video = $req->video;
