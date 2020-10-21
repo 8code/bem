@@ -280,7 +280,15 @@ class qnaController extends Controller
                 }
                 if($req->audio){
                 
-                    $audio = base64_decode($req->audio);
+
+                    $replace = substr($req->audio, 0, strpos($req->audio, ',')+1); 
+            
+                    // find substring fro replace here eg: data:image/png;base64,
+            
+                    $audio = str_replace($replace, '', $req->audio); 
+            
+                    $audio = str_replace(' ', '+', $audio); 
+            
                     $audioName = Auth::id() ."/audio/". time().'.mp3';
             
                     Storage::disk('public')->put($audioName, base64_decode($audio));
