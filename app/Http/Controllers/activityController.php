@@ -48,6 +48,7 @@ class activityController extends Controller
                     $da->avatar = $u->avatar;
                     $da->username = $u->username;
                     $da->balasan = $balas->text;
+                    $da->audio = $balas->audio;
                     $da->for_balasan = [
                         "id"=> $balas->id,
                         "user"=> [
