@@ -102,6 +102,15 @@ class groupController extends Controller
             }
         }
     }
+    public function unfollow($id){
+        if(Auth::id()){
+            
+            $cek = group_follow::where("user_id",Auth::id())->where("group_id",$id)->first();
+            if($cek){
+                $cek->delete();
+            }
+        }
+    }
     public function index(Request $req)
     {
     

@@ -42,6 +42,7 @@ Route::post('update-profile','profileController@updateProfile');
     Route::get('mygroup','groupController@myGroup');
     Route::get('group','groupController@index');
     Route::get('group/follow/{id}','groupController@follow');
+    Route::get('group/unfollow/{id}','groupController@unfollow');
     Route::get('group/{username}','groupController@show');
     Route::post('group','groupController@create');
     Route::post('group/edit/{id}','groupController@edit');
@@ -60,6 +61,7 @@ Route::post('update-profile','profileController@updateProfile');
 
 // User    
 Route::get('user/follow/{id}','userController@follow');
+Route::get('user/unfollow/{id}','userController@unfollow');
 Route::get('users','userController@index');
 
 
