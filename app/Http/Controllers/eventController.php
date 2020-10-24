@@ -20,7 +20,12 @@ class eventController extends Controller
         if(Auth::id()){
             $join = join_event::where("user_id",Auth::id())->pluck("event_id")->toArray();
 
-            $metda = MetDa::whereIn("id",$join)->latest()->paginate(5);
+            // Where Tanggal Terdekat
+            $metda = MetDa::
+             whereIn("id",$join)
+            ->with("channel")
+            ->latest()
+            ->paginate(5);
 
             return response($metda);
         }

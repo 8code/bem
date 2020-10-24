@@ -204,10 +204,16 @@ class groupController extends Controller
     public function create(Request $request)
     {
         try {
-            $metda = MetDa::create($request->all());
 
-            // dd($metda);
+            $id = MetDa::insertGetId($request->all());
+
             
+            $follow = new group_follow;
+            $follow->user_id = Auth::id();
+            $follow->group_id = $id;
+            $follow->save();
+               
+
             return response()->json([
                 'success' => true
             ]);

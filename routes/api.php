@@ -102,6 +102,9 @@ Route::get('my-events', "eventController@myEvent");
 
 
 
+// Room Channel /Event
+
+Route::get("/user-channel/{id}","channelController@index");
 
 
 

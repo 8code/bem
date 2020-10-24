@@ -8,13 +8,15 @@ use App\qna_follow;
 use Auth;
 use App\group_follow;
 use App\user_follow;
+use App\join_event;
 use App\qna;
 use App\group;
 use App\User;
 use App\activity;
 use App\event;
-
+use App\channel;
 use Storage;
+use Ramsey\Uuid\Uuid;
 
 
 class qnaController extends Controller
@@ -323,6 +325,25 @@ class qnaController extends Controller
                     $newEvent->group_id = $metda->group_id;
                     $newEvent->user_id = $metda->user_id;
                     $newEvent->save();
+
+
+                    // Create Channel Event
+                    $newChannel = new channel;
+                    $newChannel->room_id = Uuid::uuid1();
+                    $newChannel->event_id = $newEvent->id;
+                    $newChannel->save();
+
+
+                    // Join Event
+
+                    $joinEvent = new join_event;
+                    $joinEvent->user_id = Auth::id();
+                    $joinEvent->event_id = $newEvent->id;
+                    $joinEvent->status = 1;
+                    $joinEvent->price = 0;
+                    $joinEvent->message = "Admin";
+                    $joinEvent->save();
+
 
                     $update2 = MetDa::find($metda->id);
 
