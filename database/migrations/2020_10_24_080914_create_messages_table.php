@@ -16,6 +16,7 @@ class CreateMessagesTable extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->integer("channel_id");  
+            $table->integer("user_id");  
             $table->string("text")->nullable();
             $table->string("image")->nullable();
             $table->string("audio")->nullable();

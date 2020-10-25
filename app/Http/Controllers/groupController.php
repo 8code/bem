@@ -30,15 +30,13 @@ class groupController extends Controller
                     $group = Metda::find($id);
 
                     if($req->filter){
-                        if($req->filter == 'Quest Only'){
+                        if($req->filter == 'New'){
                             $filterType = " quest_id is null";
                         }
-                   
-                        
                         else if($req->filter == 'Event'){
-                            $filterType = 'type == 2';
-                        } else if($req->filter == 'Tagar'){
-                            $filterType = 'type == 3';
+                            $filterType = 'type = 2';
+                        } else if($req->filter == 'Voice'){
+                            $filterType = 'audio != null';
                         }
                         else{
                             $filterType = 'id';
@@ -233,6 +231,9 @@ class groupController extends Controller
         ->with("owner")->first();
         if($metda){
             $cek = group_follow::where("user_id",Auth::id())->where("group_id",$metda->id)->first();
+            $totalFollower = group_follow::where("group_id",$metda->id)->count();
+
+            $metda->follower = $totalFollower;
 
             if($cek){
                 $metda->followed = true;

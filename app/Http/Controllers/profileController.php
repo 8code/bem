@@ -137,12 +137,14 @@ class profileController extends Controller
                
 
                     if($req->filter){
-                        if($req->filter == 'Quest Only'){
-                            $filterType = " quest_id is null";
-                        }else if($req->filter == 'Quest & Balasan'){
-                            $filterType = 'text != ""';
-                        }else if($req->filter == 'Media'){
-                            $filterType = ' (img != "" OR video != "" OR embed != "")';
+                        if($req->filter == 'New'){
+                            $filterType = " id";
+                        }else if($req->filter == 'Story'){
+                            $filterType = " type = 1";
+                        }else if($req->filter == 'Voice'){
+                            $filterType = 'audio != ""';
+                        }else if($req->filter == 'Image'){
+                            $filterType = ' (img != "")';
                         }else{
                             $filterType = 'id';
                         }

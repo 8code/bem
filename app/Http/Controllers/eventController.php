@@ -14,6 +14,14 @@ class eventController extends Controller
 {
 
 
+    public function byRoomBy($id){
+        $metda = MetDa::
+        join("channels","events.id","channels.event_id")
+        ->where("channels.room_id",$id)
+        ->select("events.*")
+        ->first();
+        return $metda;
+    }
 
     public function myEvent()
     {

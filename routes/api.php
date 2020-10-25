@@ -59,6 +59,10 @@ Route::post('update-profile','profileController@updateProfile');
 
     Route::get('quest/balasan/{id}','qnaController@questBalasan');
 
+
+    Route::get("/delete-quest/{id}",'qnaController@delete');
+    Route::get("/notif_quest/{id}",'qnaController@notifQuest');
+
 // User    
 Route::get('user/follow/{id}','userController@follow');
 Route::get('user/unfollow/{id}','userController@unfollow');
@@ -97,6 +101,7 @@ Route::get('event/explore','eventController@event_explore');
 Route::get('join-event/{id}', "eventController@joinEvent");
 Route::get('my-events', "eventController@myEvent");
 
+Route::get("/event_by_room_id/{id}","eventController@byRoomBy");
 
 
 
@@ -105,6 +110,26 @@ Route::get('my-events', "eventController@myEvent");
 // Room Channel /Event
 
 Route::get("/user-channel/{id}","channelController@index");
+
+
+
+
+// Report
+Route::get("/report/{id}/{text}","reportController@store");
+
+
+// Messages
+
+
+Route::get("/chat_message_user","messageController@index");
+Route::get("/chat_by_room_id/{id}","messageController@chatRoom");
+Route::get("/chat_to/{id}","messageController@chatTo");
+
+
+Route::post("/send-message/{id}","messageController@sendMessage");
+
+
+
 
 
 

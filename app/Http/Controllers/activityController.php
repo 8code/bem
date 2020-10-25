@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\activity;
+use App\notif_quest;
 use App\qna;
 use App\User;
 
@@ -24,6 +25,8 @@ class activityController extends Controller
             }
 
 
+            $notifMe = notif_quest::where("user_id",Auth::id())->pluck("quest_id")->toArray();
+
             $act = activity::
                 leftJoin("qnas as quest","quest.id","activities.quest_id")
                 ->leftJoin("users as user","activities.user_id","user.id")
@@ -31,6 +34,7 @@ class activityController extends Controller
                 ->Where("activities.tipe","!=",4)
                 ->Where("activities.tipe","!=",0)
                 ->orWhere("activities.mention","like",Auth::id())
+                ->orWhereIn("activities.quest_id",$notifMe)
                 ->select("activities.*","quest.text","user.avatar","user.username","user.name")
                 ->skip($skip)->take($take)
                 ->orderBy("activities.created_at","DESC")

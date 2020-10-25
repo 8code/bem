@@ -9,6 +9,7 @@ use Auth;
 use App\group_follow;
 use App\user_follow;
 use App\join_event;
+use App\notif_quest;
 use App\qna;
 use App\group;
 use App\User;
@@ -236,6 +237,16 @@ class qnaController extends Controller
         try {
             if(Auth::id()){
 
+                
+
+                if($req->anonim){
+                    $userId = 1;
+                }else {
+                    $userId = Auth::id();
+                }
+
+
+
                 $metda = new MetDa;
                
                 if($req->quest_id){
@@ -301,7 +312,9 @@ class qnaController extends Controller
                 if($req->video){
                     $metda->video = $req->video;
                 }
-                $metda->user_id = Auth::id();
+                
+                $metda->user_id = $userId;
+            
 
                 if($req->desc && $req->type != 2){
                     $metda->desc = $req->desc;
@@ -313,6 +326,15 @@ class qnaController extends Controller
 
                 $metda->save();
 
+
+                if($req->anonim){
+                    // Get Notif for Me
+                    $newNotif = new notif_quest;
+                    $newNotif->user_id = Auth::id();
+                    $newNotif->quest_id = $metda->id;
+                    $newNotif->save();
+                }
+
                 if($req->type == 2){
                     // Event
                     $newEvent = new event;
@@ -323,7 +345,7 @@ class qnaController extends Controller
                     $newEvent->start = $req->start;
                     $newEvent->end = $req->end;
                     $newEvent->group_id = $metda->group_id;
-                    $newEvent->user_id = $metda->user_id;
+                    $newEvent->user_id = $userId;
                     $newEvent->save();
 
 
@@ -353,10 +375,6 @@ class qnaController extends Controller
                 }
                
 
-                
-
-
-
 
                 if($req->quest_id){
                     $update = qna::find($req->quest_id);
@@ -371,7 +389,7 @@ class qnaController extends Controller
                         $update->update();
                         
                             $dataAct = [
-                                "user_id" => Auth::id(),
+                                "user_id" => $userId,
                                 "quest_id" => $req->quest_id,
                                 "group_id" => $metda->group_id,
                                 "quest_balas_id" => $metda->id,
@@ -402,7 +420,7 @@ class qnaController extends Controller
                            
                             // Mentions
                             $dataAct0 = [
-                                "user_id" => Auth::id(),
+                                "user_id" => $userId,
                                 "quest_id" => $metda->id,
                                 "tipe" => 3,
                                 "link" => "/quest/$metda->id",
@@ -416,7 +434,7 @@ class qnaController extends Controller
 
                              // Tagar
                              $dataAct0 = [
-                                "user_id" => Auth::id(),
+                                "user_id" => $userId,
                                 "quest_id" => $metda->id,
                                 "tipe" => 4,
                                 "link" => "",
@@ -493,18 +511,32 @@ class qnaController extends Controller
     {
         //
          try {
-            $metda = MetDa::find($id)->delete();
-            return response()->json([
-                'success' => true
-            ]);
+            $metda = MetDa::find($id);
+
+            // cek Event
+            if($metda->event_id){
+                $event = event::find($metda->event_id);
+                $event->status = 0;
+                $event->save();
+            }
+            $metda->status = 0;
+            $metda->save();
+
+            return "success";
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'data'=> $th
-            ]);
+            return "failed";
         }
     }
 
+    public function notifQuest($id){
+
+        $newNotif = new notif_quest;
+        $newNotif->user_id = Auth::id();
+        $newNotif->quest_id = $id;
+        $newNotif->save();
+
+        return "success";
+    }
     public function questBalasan(Request $req, $id){
         if(Auth::id()){
                 

@@ -23,6 +23,7 @@ class CreateEventsTable extends Migration
             $table->datetime("end")->nullable();
             $table->integer("group_id")->nullable();
             $table->integer("user_id")->nullable();
+            $table->boolean("status")->default(1);
             $table->timestamps();
         });
     }
