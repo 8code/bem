@@ -90,7 +90,17 @@ class messageController extends Controller
                 ->where("user_2", Auth::id())
                 ->first();
 
-            if(!$cek && !$cek2){
+            if($cek || $cek2){
+                
+                if($cek){
+                    return $cek->room_id;
+                }
+                if($cek2){
+                    return $cek->room_id;
+                }
+
+
+            }else{
                 $chat = new channel;
                 $chat->user_1 = Auth::id();
                 $chat->user_2 = $id;
@@ -98,9 +108,6 @@ class messageController extends Controller
                 $chat->save();
 
                 return $chat->room_id;
-
-            }else{
-                return $cek->room_id;
             }
            
             return "";
