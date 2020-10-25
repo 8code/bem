@@ -31,7 +31,7 @@ class activityController extends Controller
                 ->Where("activities.tipe","!=",4)
                 ->Where("activities.tipe","!=",0)
                 ->orWhere("activities.mention","like",Auth::id())
-                ->select("activities.*","quest.text","user.avatar","user.username")
+                ->select("activities.*","quest.text","user.avatar","user.username","user.name")
                 ->skip($skip)->take($take)
                 ->orderBy("activities.created_at","DESC")
                 ->get();
@@ -46,12 +46,14 @@ class activityController extends Controller
                 if($balas){
                     $u = User::find($balas->user_id);
                     $da->avatar = $u->avatar;
+                    $da->name = $u->name;
                     $da->username = $u->username;
                     $da->balasan = $balas->text;
                     $da->audio = $balas->audio;
                     $da->for_balasan = [
                         "id"=> $balas->id,
                         "user"=> [
+                            "name"=> $u->name,
                             "username"=> $u->username
                         ],
                     ];
