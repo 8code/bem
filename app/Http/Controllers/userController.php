@@ -24,6 +24,7 @@ class userController extends Controller
 
                 $dataAct = [
                     "user_id" => Auth::id(),
+                    "follow_id" => $id,
                     "tipe" => 6,
                 ];
                 

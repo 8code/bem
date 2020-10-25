@@ -62,7 +62,8 @@ class messageController extends Controller
                 // get Last Message
                 $message = messages::where("channel_id",$metda->id)
                 ->with("user")
-                ->latest()->paginate(10);
+                ->latest()
+                ->paginate(10);
     
                 return [
                     "channel_id"=> $metda->id,

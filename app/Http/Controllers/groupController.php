@@ -49,6 +49,7 @@ class groupController extends Controller
                     $metda = qna::orderBy("id","DESC")
                         ->whereRaw($filterType)
                         ->where("group_id",$id)
+                        ->where("status",1)
                         ->with("group")
                         ->with("user")
                         ->with("quest")

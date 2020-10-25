@@ -47,7 +47,7 @@ class qnaController extends Controller
                             $da->whereIn("group_id",$following);
                             $da->orWhereIn("user_id",$following_user);
                         })
-                        // ->whereNotIn("id",$filterView)
+                        ->where("status",1)
                         ->with("group")
                         ->with("user")
                         ->with("quest")
@@ -125,6 +125,7 @@ class qnaController extends Controller
                         ->with("user")
                         ->with("quest")
                         ->where("quest_id",null)
+                        ->where("status",1)
                         ->whereNotIn("id",$filterView)
                         ->orderBy("activity","DESC")
                         ->orderBy("id","DESC")
@@ -136,6 +137,7 @@ class qnaController extends Controller
                         ->with("group")
                         ->with("user")
                         ->with("quest")
+                        ->where("status",1)
                         ->where("quest_id",null)
                         ->orderBy("activity","DESC")
                         ->orderBy("id","DESC")
@@ -551,6 +553,7 @@ class qnaController extends Controller
                  with("group")
                 ->with("user")
                 ->with("quest")
+                ->where("status",1)
                 ->where("quest_id", $id)
                 ->orderBy("created_at","DESC")
                 ->orderBy("id","DESC")

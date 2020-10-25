@@ -17,6 +17,8 @@ class donationController extends Controller
         ->with("group")
         ->with("user")
         ->with("quest")
+        ->where("status",1)
+
         ->where("quest_id",null)
         ->orderBy("activity","DESC")
         ->orderBy("id","DESC")
