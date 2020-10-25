@@ -82,10 +82,15 @@ class messageController extends Controller
             // cek   
             $cek = channel::
                 where("user_1",Auth::id())
-                ->orWhere("user_2",Auth::id())
+                ->where("user_2",$id)
+                ->first();
+            
+            $cek2 = channel::
+                where("user_1",$id)
+                ->where("user_2", Auth::id())
                 ->first();
 
-            if(!$cek){
+            if(!$cek && !$cek2){
                 $chat = new channel;
                 $chat->user_1 = Auth::id();
                 $chat->user_2 = $id;
