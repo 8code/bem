@@ -21,7 +21,7 @@ class activityController extends Controller
             $take = 15;
 
             if($req->page > 1){
-                $skip = $take * $req->page-1;
+                $skip = ($take * ($req->page-1))-1;
             }
 
 
@@ -33,7 +33,7 @@ class activityController extends Controller
                 ->where("quest.user_id",Auth::id())
                 ->Where("activities.tipe","!=",4)
                 ->Where("activities.tipe","!=",0)
-                ->orWhere("activities.mention","like",Auth::id())
+                ->orWhere("activities.mention","like",Auth::user()->username)
                 ->orWhereIn("activities.quest_id",$notifMe)
                 ->orWhere("activities.follow_id",Auth::id())
                 ->select("activities.*","quest.text","user.avatar","user.username","user.name")

@@ -65,7 +65,7 @@ class eventController extends Controller
             $take = 9;
 
             if($req->page > 1){
-                $skip = $take * $req->page-1;
+                $skip = ($take * ($req->page-1))-1;
             }
 
             if($req->search){

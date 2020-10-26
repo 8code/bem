@@ -132,7 +132,7 @@ class profileController extends Controller
 
 
                     if($req->page > 1){
-                        $skip = ($take * $req->page-1)-1;
+                        $skip = ($take * ($req->page-1))-1;
                     }
 
 

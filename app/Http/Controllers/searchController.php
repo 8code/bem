@@ -22,7 +22,7 @@ class searchController extends Controller
             $take = 6;
 
             if($req->page > 1){
-                $skip = $take * $req->page-1;
+                $skip = ($take * ($req->page-1))-1;
             }
 
 
@@ -79,7 +79,7 @@ class searchController extends Controller
         $take = 10;
 
         if($req->page > 1){
-            $skip = $take * $req->page-1;
+            $skip = ($take * ($req->page-1))-1;
         }
 
 

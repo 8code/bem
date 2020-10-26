@@ -30,7 +30,7 @@ class qnaController extends Controller
                     $take = 8;
 
                     if($req->page > 1){
-                        $skip = ($take * $req->page-1)-1;
+                        $skip = ($take * ($req->page-1))-1;
                     }
 
                
@@ -107,7 +107,7 @@ class qnaController extends Controller
                     $take = 8;
 
                     if($req->page > 1){
-                        $skip = ($take * $req->page-1)-1;
+                        $skip = ($take * ($req->page-1))-1;
                     }
 
 
