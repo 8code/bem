@@ -128,13 +128,14 @@ class profileController extends Controller
         if(Auth::id()){
                 
                     $skip = 0;
-                    $take = 5;
+                    $take = 10;
+
 
                     if($req->page > 1){
-                        $skip = $take * $req->page-1;
+                        $skip = ($take * $req->page-1)-1;
                     }
 
-               
+
 
                     if($req->filter){
                         if($req->filter == 'New'){
