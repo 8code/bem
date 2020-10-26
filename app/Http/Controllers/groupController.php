@@ -23,7 +23,7 @@ class groupController extends Controller
                     $take = 5;
 
                     if($req->page > 1){
-                        $skip = ($take * ($req->page-1))-1;
+                        $skip = $take * ($req->page-1);
                     }
 
                

@@ -21,7 +21,7 @@ class activityController extends Controller
             $take = 15;
 
             if($req->page > 1){
-                $skip = ($take * ($req->page-1))-1;
+                $skip = $take * ($req->page-1);
             }
 
 
