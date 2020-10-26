@@ -91,9 +91,15 @@ class groupController extends Controller
 
                         if(!$cekView){
                             activity::create($dataAct);
-                                // Update View
-                            $q->view = activity::where("quest_id",$q->id)->where("tipe",0)->count();
                         }
+
+                        $totalView = activity::where("quest_id",$q->id)->where("tipe",0)->count();
+                        
+                        $updQuest = qna::find($q->id);
+                        $updQuest->view = $totalView;
+                        $updQuest->save();
+                        
+                        $q->view = $totalView;
 
                         return $q;
                         
