@@ -52,7 +52,7 @@ class helperController extends Controller
                     if(!$cek3){
                         $follow3 = new group_follow;
                         $follow3->user_id = $user->id;
-                        $follow3->group_id = 69;
+                        $follow3->group_id = $id;
                         $follow3->save();
                     }
                 }
