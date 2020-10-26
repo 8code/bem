@@ -44,17 +44,20 @@ class helperController extends Controller
                     $follow2->save();
     
                 }
-    
-                $cek3 = group_follow::where("user_id",$user->id)->where("group_id",69)->first();
-                
+                $group_id = [82,83,84,85,86,87,69];
 
-                if(!$cek3){
-                    // dd($cek);
-                    $follow3 = new group_follow;
-                    $follow3->user_id = $user->id;
-                    $follow3->group_id = 69;
-                    $follow3->save();
+                foreach($group_id as $id){
+                    $cek3 = group_follow::where("user_id",$user->id)->where("group_id",$id)->first();
+                     
+                    if(!$cek3){
+                        $follow3 = new group_follow;
+                        $follow3->user_id = $user->id;
+                        $follow3->group_id = 69;
+                        $follow3->save();
+                    }
                 }
+
+               
             }
         // }
     }
