@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\donation as MetDa;
 use App\qna;
+use App\activity;
 
 
 class donationController extends Controller

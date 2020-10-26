@@ -9,6 +9,7 @@ use App\group_follow;
 use App\qna;
 use App\User;
 use App\qna_follow;
+use App\activity;
 use Storage;
 
 
@@ -76,6 +77,22 @@ class groupController extends Controller
 
                         if($follow){
                             $q->followed = true;
+                        }
+
+                        $dataAct = [
+                            "user_id" => Auth::id(),
+                            "quest_id" => $q->id,
+                            "tipe" => 0
+                        ];
+                        $cekView = activity::where("user_id",Auth::id())
+                        ->where("quest_id",$q->id)
+                        ->where("tipe",0)
+                        ->first();
+
+                        if(!$cekView){
+                            activity::create($dataAct);
+                                // Update View
+                            $q->view = activity::where("quest_id",$q->id)->where("tipe",0)->count()
                         }
 
                         return $q;

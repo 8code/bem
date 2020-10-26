@@ -34,7 +34,6 @@ class qnaController extends Controller
                     }
 
                
-            
                     
                     $following = group_follow::where("user_id",Auth::id())->pluck("group_id")->toArray();
                     $following_user = user_follow::where("user_id",Auth::id())->pluck("followed_id")->toArray();
@@ -70,17 +69,25 @@ class qnaController extends Controller
                             ->where("quest_id",$q->id)
                             ->first();
 
-                        
                                 
                         $dataAct = [
                             "user_id" => Auth::id(),
                             "quest_id" => $q->id,
                             "tipe" => 0
                         ];
-                        $cekView = activity::where("user_id",Auth::id())->where("quest_id",$q->id)->first();
+
+                        
+                        $cekView = activity::
+                        where("user_id",Auth::id())
+                        ->where("quest_id",$q->id)
+                        ->where("tipe",0)
+                        ->first();
 
                         if(!$cekView){
-                                activity::create($dataAct);
+                            activity::create($dataAct);
+
+                            // Update View
+                            $q->view = activity::where("quest_id",$q->id)->where("tipe",0)->count()
                         }
                             
                         if($follow){
@@ -169,10 +176,15 @@ class qnaController extends Controller
                             "quest_id" => $q->id,
                             "tipe" => 0
                         ];
-                        $cekView = activity::where("user_id",Auth::id())->where("quest_id",$q->id)->first();
+                        $cekView = activity::where("user_id",Auth::id())
+                        ->where("quest_id",$q->id)
+                        ->where("tipe",0)
+                        ->first();
 
                         if(!$cekView){
-                                activity::create($dataAct);
+                            activity::create($dataAct);
+                                // Update View
+                            $q->view = activity::where("quest_id",$q->id)->where("tipe",0)->count()
                         }
 
 
