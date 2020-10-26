@@ -92,7 +92,7 @@ class groupController extends Controller
                         if(!$cekView){
                             activity::create($dataAct);
                                 // Update View
-                            $q->view = activity::where("quest_id",$q->id)->where("tipe",0)->count()
+                            $q->view = activity::where("quest_id",$q->id)->where("tipe",0)->count();
                         }
 
                         return $q;

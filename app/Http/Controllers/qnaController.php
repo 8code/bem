@@ -87,7 +87,7 @@ class qnaController extends Controller
                             activity::create($dataAct);
 
                             // Update View
-                            $q->view = activity::where("quest_id",$q->id)->where("tipe",0)->count()
+                            $q->view = activity::where("quest_id",$q->id)->where("tipe",0)->count();
                         }
                             
                         if($follow){
@@ -184,7 +184,7 @@ class qnaController extends Controller
                         if(!$cekView){
                             activity::create($dataAct);
                                 // Update View
-                            $q->view = activity::where("quest_id",$q->id)->where("tipe",0)->count()
+                            $q->view = activity::where("quest_id",$q->id)->where("tipe",0)->count();
                         }
 
 
