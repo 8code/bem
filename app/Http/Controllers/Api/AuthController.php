@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\User;
 use App\user_follow;
+use App\group_follow;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 use Str;
@@ -74,6 +75,20 @@ class AuthController extends Controller
         
         
                     }
+
+                    $group_id = [82,83,84,85,86,87,69];
+
+                    foreach($group_id as $id){
+                        $cek3 = group_follow::where("user_id",$user->id)->where("group_id",$id)->first();
+                            
+                        if(!$cek3){
+                            $follow3 = new group_follow;
+                            $follow3->user_id = $user->id;
+                            $follow3->group_id = $id;
+                            $follow3->save();
+                        }
+                    }
+
 
                 // Success
                 $accessToken = auth()->user()->createToken('authToken')->accessToken;

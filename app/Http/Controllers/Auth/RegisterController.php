@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use App\user_follow;
+use App\group_follow;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -88,6 +89,21 @@ class RegisterController extends Controller
             $follow2->save();
 
         }
+
+        $group_id = [82,83,84,85,86,87,69];
+
+        foreach($group_id as $id){
+            $cek3 = group_follow::where("user_id",$user->id)->where("group_id",$id)->first();
+                
+            if(!$cek3){
+                $follow3 = new group_follow;
+                $follow3->user_id = $user->id;
+                $follow3->group_id = $id;
+                $follow3->save();
+            }
+        }
+
+
 
         return $user;
     }
