@@ -33,9 +33,11 @@ class activityController extends Controller
                 ->where("quest.user_id",Auth::id())
                 ->Where("activities.tipe","!=",4)
                 ->Where("activities.tipe","!=",0)
-                ->orWhere("activities.mention","like",Auth::user()->username)
-                ->orWhereIn("activities.quest_id",$notifMe)
-                ->orWhere("activities.follow_id",Auth::id())
+                ->where(function($d) {
+                    $d->where("activities.mention","like",Auth::user()->username);
+                    $d->orWhereIn("activities.quest_id",$notifMe);
+                    $d->orWhere("activities.follow_id",Auth::id());
+                })
                 ->select("activities.*","quest.text","user.avatar","user.username","user.name")
                 ->skip($skip)->take($take)
                 ->orderBy("activities.created_at","DESC")
