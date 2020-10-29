@@ -25,7 +25,9 @@ class activityController extends Controller
             }
 
 
-            $notifMe = notif_quest::where("user_id",Auth::id())->pluck("quest_id")->toArray();
+            $notifMe = notif_quest::where("user_id",Auth::id())
+                        ->pluck("quest_id")
+                        ->toArray();
 
             $act = activity::
                 leftJoin("qnas as quest","quest.id","activities.quest_id")
@@ -33,10 +35,12 @@ class activityController extends Controller
                 ->where("quest.user_id",Auth::id())
                 ->Where("activities.tipe","!=",4)
                 ->Where("activities.tipe","!=",0)
-                ->where(function($d) {
-                    $d->where("activities.mention","like",Auth::user()->username);
-                    $d->orWhereIn("activities.quest_id",$notifMe);
-                    $d->orWhere("activities.follow_id",Auth::id());
+                ->orWhere("activities.follow_id",Auth::id())
+                ->where("activities.mention","like",Auth::user()->username)
+                ->orWhere(function($d) use ($notifMe) {
+                    $d->Where("activities.tipe","!=",4);
+                    $d->Where("activities.tipe","!=",0);
+                    $d->whereIn("activities.quest_id",$notifMe);
                 })
                 ->select("activities.*","quest.text","user.avatar","user.username","user.name")
                 ->skip($skip)->take($take)
