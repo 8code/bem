@@ -12,11 +12,11 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 
--- Membuang struktur basisdata untuk new_maba
-CREATE DATABASE IF NOT EXISTS `new_maba` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `new_maba`;
+-- Membuang struktur basisdata untuk maba
+CREATE DATABASE IF NOT EXISTS `maba` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `maba`;
 
--- membuang struktur untuk table new_maba.activities
+-- membuang struktur untuk table maba.activities
 CREATE TABLE IF NOT EXISTS `activities` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `activities` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=333 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.activities: 332 rows
+-- Membuang data untuk tabel maba.activities: 332 rows
 /*!40000 ALTER TABLE `activities` DISABLE KEYS */;
 INSERT INTO `activities` (`id`, `user_id`, `quest_id`, `quest_balas_id`, `tipe`, `link`, `mention`, `tagar`, `group_id`, `follow_id`, `created_at`, `updated_at`) VALUES
 	(1, 549, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, '2020-10-25 17:19:46', '2020-10-25 17:19:46'),
@@ -370,7 +370,7 @@ INSERT INTO `activities` (`id`, `user_id`, `quest_id`, `quest_balas_id`, `tipe`,
 	(332, 205, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, '2020-10-30 09:24:38', '2020-10-30 09:24:38');
 /*!40000 ALTER TABLE `activities` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.cek_activities
+-- membuang struktur untuk table maba.cek_activities
 CREATE TABLE IF NOT EXISTS `cek_activities` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -379,11 +379,11 @@ CREATE TABLE IF NOT EXISTS `cek_activities` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.cek_activities: 0 rows
+-- Membuang data untuk tabel maba.cek_activities: 0 rows
 /*!40000 ALTER TABLE `cek_activities` DISABLE KEYS */;
 /*!40000 ALTER TABLE `cek_activities` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.channels
+-- membuang struktur untuk table maba.channels
 CREATE TABLE IF NOT EXISTS `channels` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `event_id` int(11) DEFAULT NULL,
@@ -396,7 +396,7 @@ CREATE TABLE IF NOT EXISTS `channels` (
   UNIQUE KEY `channels_room_id_unique` (`room_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.channels: 10 rows
+-- Membuang data untuk tabel maba.channels: 10 rows
 /*!40000 ALTER TABLE `channels` DISABLE KEYS */;
 INSERT INTO `channels` (`id`, `event_id`, `user_1`, `user_2`, `room_id`, `created_at`, `updated_at`) VALUES
 	(1, 1, NULL, NULL, '87cbf552-1625-11eb-a718-3128cbd16166', '2020-10-24 11:20:01', '2020-10-24 11:20:01'),
@@ -411,7 +411,7 @@ INSERT INTO `channels` (`id`, `event_id`, `user_1`, `user_2`, `room_id`, `create
 	(12, 1, NULL, NULL, 'f4a73484-1878-11eb-b74c-275f391ed823', '2020-10-27 10:22:14', '2020-10-27 10:22:14');
 /*!40000 ALTER TABLE `channels` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.donations
+-- membuang struktur untuk table maba.donations
 CREATE TABLE IF NOT EXISTS `donations` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -426,11 +426,11 @@ CREATE TABLE IF NOT EXISTS `donations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.donations: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel maba.donations: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `donations` DISABLE KEYS */;
 /*!40000 ALTER TABLE `donations` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.events
+-- membuang struktur untuk table maba.events
 CREATE TABLE IF NOT EXISTS `events` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -447,13 +447,13 @@ CREATE TABLE IF NOT EXISTS `events` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.events: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel maba.events: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
 INSERT INTO `events` (`id`, `name`, `image`, `desc`, `price`, `start`, `end`, `group_id`, `status`, `user_id`, `created_at`, `updated_at`) VALUES
 	(1, 'Live Q&A Aplikasi Maba', NULL, '<p>Testing Live Event</p>', NULL, '2020-10-30', '2020-10-30', NULL, 1, 1, '2020-10-27 10:22:14', '2020-10-27 10:22:14');
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.failed_jobs
+-- membuang struktur untuk table maba.failed_jobs
 CREATE TABLE IF NOT EXISTS `failed_jobs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -464,11 +464,11 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.failed_jobs: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel maba.failed_jobs: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `failed_jobs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `failed_jobs` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.groups
+-- membuang struktur untuk table maba.groups
 CREATE TABLE IF NOT EXISTS `groups` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -487,7 +487,7 @@ CREATE TABLE IF NOT EXISTS `groups` (
   UNIQUE KEY `groups_username_unique` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.groups: ~37 rows (lebih kurang)
+-- Membuang data untuk tabel maba.groups: ~37 rows (lebih kurang)
 /*!40000 ALTER TABLE `groups` DISABLE KEYS */;
 INSERT INTO `groups` (`id`, `username`, `name`, `avatar`, `desc`, `type`, `university`, `user_id`, `status`, `last_active`, `instagram`, `created_at`, `updated_at`) VALUES
 	(2, 'bemunsil', 'BEM UNSIL', 'https://api.maba.my.id/storage/2-group.png', '-', 'Ormawa', 'Universitas Siliwangi', 5, 1, '1603451832', '@bemunsil', '2020-08-22 10:40:52', '2020-10-23 04:17:12'),
@@ -529,7 +529,7 @@ INSERT INTO `groups` (`id`, `username`, `name`, `avatar`, `desc`, `type`, `unive
 	(87, 'kerja', 'Curhat Pekerjaan', 'https://api.maba.my.id/storage/1/ukmk25KcDq.jpeg', 'Curhat Pekerjaan, Kuliah sambil kerja kata siapa tidak bisa', 'Lainnya', 'Universitas Siliwangi', 1, 1, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.group_follows
+-- membuang struktur untuk table maba.group_follows
 CREATE TABLE IF NOT EXISTS `group_follows` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -539,7 +539,7 @@ CREATE TABLE IF NOT EXISTS `group_follows` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=11793 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.group_follows: 4.607 rows
+-- Membuang data untuk tabel maba.group_follows: 4.607 rows
 /*!40000 ALTER TABLE `group_follows` DISABLE KEYS */;
 INSERT INTO `group_follows` (`id`, `user_id`, `group_id`, `created_at`, `updated_at`) VALUES
 	(506, 572, 17, '2020-10-25 16:48:32', '2020-10-25 16:48:32'),
@@ -5151,7 +5151,7 @@ INSERT INTO `group_follows` (`id`, `user_id`, `group_id`, `created_at`, `updated
 	(7648, 2, 82, '2020-10-25 17:23:45', '2020-10-25 17:23:45');
 /*!40000 ALTER TABLE `group_follows` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.join_events
+-- membuang struktur untuk table maba.join_events
 CREATE TABLE IF NOT EXISTS `join_events` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -5164,7 +5164,7 @@ CREATE TABLE IF NOT EXISTS `join_events` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.join_events: 5 rows
+-- Membuang data untuk tabel maba.join_events: 5 rows
 /*!40000 ALTER TABLE `join_events` DISABLE KEYS */;
 INSERT INTO `join_events` (`id`, `user_id`, `event_id`, `status`, `price`, `message`, `created_at`, `updated_at`) VALUES
 	(1, 1, 1, 1, 0, 'Admin', '2020-10-27 10:22:14', '2020-10-27 10:22:14'),
@@ -5174,7 +5174,7 @@ INSERT INTO `join_events` (`id`, `user_id`, `event_id`, `status`, `price`, `mess
 	(5, 45, 1, 0, 0, '0', '2020-10-27 18:06:57', '2020-10-27 18:06:57');
 /*!40000 ALTER TABLE `join_events` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.messages
+-- membuang struktur untuk table maba.messages
 CREATE TABLE IF NOT EXISTS `messages` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `channel_id` int(11) NOT NULL,
@@ -5189,7 +5189,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.messages: 51 rows
+-- Membuang data untuk tabel maba.messages: 51 rows
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
 INSERT INTO `messages` (`id`, `channel_id`, `user_id`, `text`, `image`, `audio`, `stiker`, `created_at`, `updated_at`, `anonim`) VALUES
 	(1, 2, 1, 'Halo Ari', NULL, NULL, NULL, '2020-10-25 15:02:09', '2020-10-25 15:02:09', NULL),
@@ -5245,7 +5245,7 @@ INSERT INTO `messages` (`id`, `channel_id`, `user_id`, `text`, `image`, `audio`,
 	(51, 11, 1, 'Haha nga DM didie :v', NULL, NULL, NULL, '2020-10-29 02:59:59', '2020-10-29 02:59:59', NULL);
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.migrations
+-- membuang struktur untuk table maba.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5253,7 +5253,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.migrations: ~24 rows (lebih kurang)
+-- Membuang data untuk tabel maba.migrations: ~24 rows (lebih kurang)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(25, '2014_10_12_000000_create_users_table', 1),
@@ -5282,7 +5282,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(50, '2020_10_25_175819_create_reports_table', 7);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.notif_quests
+-- membuang struktur untuk table maba.notif_quests
 CREATE TABLE IF NOT EXISTS `notif_quests` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -5292,7 +5292,7 @@ CREATE TABLE IF NOT EXISTS `notif_quests` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.notif_quests: 6 rows
+-- Membuang data untuk tabel maba.notif_quests: 6 rows
 /*!40000 ALTER TABLE `notif_quests` DISABLE KEYS */;
 INSERT INTO `notif_quests` (`id`, `user_id`, `quest_id`, `created_at`, `updated_at`) VALUES
 	(1, 1, 2, '2020-10-25 17:13:03', '2020-10-25 17:13:03'),
@@ -5303,7 +5303,7 @@ INSERT INTO `notif_quests` (`id`, `user_id`, `quest_id`, `created_at`, `updated_
 	(6, 605, 18, '2020-10-26 08:13:30', '2020-10-26 08:13:30');
 /*!40000 ALTER TABLE `notif_quests` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.oauth_access_tokens
+-- membuang struktur untuk table maba.oauth_access_tokens
 CREATE TABLE IF NOT EXISTS `oauth_access_tokens` (
   `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint(20) unsigned DEFAULT NULL,
@@ -5318,7 +5318,7 @@ CREATE TABLE IF NOT EXISTS `oauth_access_tokens` (
   KEY `oauth_access_tokens_user_id_index` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.oauth_access_tokens: ~905 rows (lebih kurang)
+-- Membuang data untuk tabel maba.oauth_access_tokens: ~905 rows (lebih kurang)
 /*!40000 ALTER TABLE `oauth_access_tokens` DISABLE KEYS */;
 INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
 	('001c37be79c1e20b7e4d30f3fa1f9a39e334b28571ea4a5113f9cfb4dc375edca0c9b852e3e8c808', 485, 1, 'authToken', '[]', 0, '2020-09-16 19:54:39', '2020-09-16 19:54:39', '2021-09-17 02:54:39'),
@@ -6228,7 +6228,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('fffbf7796b7ec3b2ccd504db99698ff79b51c27990efbac96ed84d80499ea482f45dc57361affb87', 114, 1, 'authToken', '[]', 0, '2020-09-15 20:29:27', '2020-09-15 20:29:27', '2021-09-16 03:29:27');
 /*!40000 ALTER TABLE `oauth_access_tokens` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.oauth_auth_codes
+-- membuang struktur untuk table maba.oauth_auth_codes
 CREATE TABLE IF NOT EXISTS `oauth_auth_codes` (
   `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL,
@@ -6240,11 +6240,11 @@ CREATE TABLE IF NOT EXISTS `oauth_auth_codes` (
   KEY `oauth_auth_codes_user_id_index` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.oauth_auth_codes: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel maba.oauth_auth_codes: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `oauth_auth_codes` DISABLE KEYS */;
 /*!40000 ALTER TABLE `oauth_auth_codes` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.oauth_clients
+-- membuang struktur untuk table maba.oauth_clients
 CREATE TABLE IF NOT EXISTS `oauth_clients` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned DEFAULT NULL,
@@ -6261,14 +6261,14 @@ CREATE TABLE IF NOT EXISTS `oauth_clients` (
   KEY `oauth_clients_user_id_index` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.oauth_clients: ~2 rows (lebih kurang)
+-- Membuang data untuk tabel maba.oauth_clients: ~2 rows (lebih kurang)
 /*!40000 ALTER TABLE `oauth_clients` DISABLE KEYS */;
 INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `provider`, `redirect`, `personal_access_client`, `password_client`, `revoked`, `created_at`, `updated_at`) VALUES
 	(1, NULL, 'Maba Personal Access Client', 'o2w2E8G9GEs2NGjzQ1YZLnLULy028O4TYGYD1P84', NULL, 'http://localhost', 1, 0, 0, '2020-08-16 23:33:43', '2020-08-16 23:33:43'),
 	(2, NULL, 'Maba Password Grant Client', 'IE0IwmiJqg1kqx3ary4hkeHB6qfG8yGPRXmxyrwy', 'users', 'http://localhost', 0, 1, 0, '2020-08-16 23:33:43', '2020-08-16 23:33:43');
 /*!40000 ALTER TABLE `oauth_clients` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.oauth_personal_access_clients
+-- membuang struktur untuk table maba.oauth_personal_access_clients
 CREATE TABLE IF NOT EXISTS `oauth_personal_access_clients` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `client_id` bigint(20) unsigned NOT NULL,
@@ -6277,13 +6277,13 @@ CREATE TABLE IF NOT EXISTS `oauth_personal_access_clients` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.oauth_personal_access_clients: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel maba.oauth_personal_access_clients: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `oauth_personal_access_clients` DISABLE KEYS */;
 INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `updated_at`) VALUES
 	(1, 1, '2020-08-16 23:33:43', '2020-08-16 23:33:43');
 /*!40000 ALTER TABLE `oauth_personal_access_clients` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.oauth_refresh_tokens
+-- membuang struktur untuk table maba.oauth_refresh_tokens
 CREATE TABLE IF NOT EXISTS `oauth_refresh_tokens` (
   `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -6292,11 +6292,11 @@ CREATE TABLE IF NOT EXISTS `oauth_refresh_tokens` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.oauth_refresh_tokens: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel maba.oauth_refresh_tokens: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `oauth_refresh_tokens` DISABLE KEYS */;
 /*!40000 ALTER TABLE `oauth_refresh_tokens` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.password_resets
+-- membuang struktur untuk table maba.password_resets
 CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -6304,13 +6304,13 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
   KEY `password_resets_email_index` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.password_resets: ~1 rows (lebih kurang)
+-- Membuang data untuk tabel maba.password_resets: ~1 rows (lebih kurang)
 /*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
 INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 	('sintyaaabrinita@gmail.com', '$2y$10$9VY7Ivqx1xm.1gIEZXjTEeMNTFieWTGbBKrGL.5iLwju3MOdvspC6', '2020-09-16 18:37:07');
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.qnas
+-- membuang struktur untuk table maba.qnas
 CREATE TABLE IF NOT EXISTS `qnas` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -6337,7 +6337,7 @@ CREATE TABLE IF NOT EXISTS `qnas` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.qnas: 21 rows
+-- Membuang data untuk tabel maba.qnas: 21 rows
 /*!40000 ALTER TABLE `qnas` DISABLE KEYS */;
 INSERT INTO `qnas` (`id`, `user_id`, `text`, `desc`, `thumb`, `embed`, `img`, `video`, `audio`, `group_id`, `type`, `quest_id`, `total_follower`, `total_qna`, `view`, `activity`, `status`, `price`, `event_id`, `created_at`, `updated_at`, `anonim`) VALUES
 	(3, 1, '#part1 Cerita horor KKN di Desa Penari terus-menerus menjadi pembicaraan warganet. tanda pagar (tagar) #kkndesapenari, yang kini berubah menjadi #kkndidesapenari, masih menjadi trending topic di posisi teratas Aplikasi Maba untuk wilayah Indonesia.', '<p>Cerita asli ditulis oleh akun Twitter @SimpleM81378523 sejak Juli 2019. Ada dua versi yang diceritakan oleh akun Twitter tersebut. Pertama dari sudut pandang Widya, kedua dari sudut pandang Nur.</p><p>Buat kalian yang penasaran dengan cerita horor yang lagi viral, berikut ini kisah lengkapnya. Akun Twitter @SimpleM81378523 menceritakannya dari sudut pandang Nur.</p><p>Nur segera merapikan tempat tidurnya, hidup merantau demi menyelesaikan pendidikanya di universitas yang sudah menjadi impianya sejak kecil kini tinggal menunggu bulan demi bulan. hanya tinggal menyelesaikan tugas terakhirnya, salah satunya, adalah tugas pengabdian pd masyarakat</p><p>orang lebih mengenalnya dengan KKN (Kuliah kerja nyata).</p><p>Malam ini, Ayu, teman sefakultasnya, baru saja membicarakan tentang rencananya, bahwa, ia, sudah memiliki tempat yang cocok untuk pelaksanaan KKN mereka, dan Nur akan ikut dalam observasi pengenalan pada desa tersebut.</p><p>di\'sela Nur mempersiapkan keberangkatanya malam ini, ia teringat harus segera memberitahu temanya yang lain tentang observasi ini, karena ia tahu, bahwa KKN program mereka, harus di selesaikan bersama-sama. janji, sebagai sahabat yang harus lulus bersama-sama.</p><p>"Wid, nang ndi?"</p><p>(Wid, dimana?)</p><p>"nang omah Nur, yo opo, wes oleh nggon KKN\'e" (di rumah Nur, gimana, sudah dapat tempat KKN\'nya)</p><p>"engkok bengi Wid aku budal karo Ayu, doaken yo" (nanti malam Wid, aku berangkat sama Ayu, doakan ya)</p><p>"nggih. semoga di acc ya"</p><p>"Aamiin" balas Ayu, mematikan telpon</p><p>balas Nur mematikan telpon*</p><p>detik-demi detik berputar, tanpa terasa malam telah tiba, Nur melihat sebuah mobil kijang mendekat. dari dalam, keluar sahabatnya Ayu, di belakangnya, ada sosok lelaki.</p><p>mungkin itu adalah mas Ilham, kakak Ayu. pikir Nur dalam hati.</p><p>"Ayo. budal" kata Ayu, menggandeng Nur agar segera masuk ke dalam mobil.</p><p>mas Ilham membawakan barang Nur, kemudian mobil pun mulai berangkat.</p><p>"adoh gak Yu" (jauh tidak yu) tanya Nur,</p><p>"paling 4 sampe 6 jam, tergantung, ngebut ora" (paling 4 sampai 6 jam, tergantung ngebut ndak)</p><p>"sing jelas, desa\'ne apik, tak jamin, masih alami. pokok\'e cocok gawe proker sing kene susun wingi" (yang jelas, desanya bagus, tak jamin, masih alami, pokoknya cocok buat proker yang kita susun kemarin)</p><p>Ayu terlihat begitu antusias, sementara Nur, ia merasa tidak nyaman.</p><p>banyak hal yang membuat Nur bimbang, salah satunya, tentang lokasi dan sebagainya. sejujurnya, ini kali pertama Nur, pergi ke arah etan (Timur) sebagai, perempuan yang lahir di daerah kulon (barat) ia sudah seringkali mendengar rumor tentang arah etan, salah satunya, kemistisanya</p><p>Mistis, bukan hal yang baru bagi Nur, bahkan ia sudah kenyang dengan berbagai pengalaman akan hal itu, saat menempuh pendidikanya sebagai santriwati, mengabaikan perasaan tidak bisa di lakukan secara kebetulan semata. dan malam ini, belum pernah Nur merasa setidak\'enak ini.</p><p>benar saja. perasaan tidak enak itu, terus bertambah seiring mobil terus melaju, salah satu pertanda buruk itu adalah ketika, sebelum memasuki kota J, dimana tujuanya kota B, Nur melihat kakek-kakek yang meminta uang di persimpangan, ia seakan melihat Nur. tatapanya, prihatin.</p><p>bukan hanya itu saja, si kakek, mengelengkan kepalanya, seolah memberikan tanda pada Nur yang ada didalam mobil, untuk mengurungkan niatnya.</p><p>namun, Nur, tidak bisa mengambil spekulasi apapun, ada temanya yang lain, yang menunggu kabar baik dari observasi hari ini.</p><p>hujan tiba-tiba turun, tanpa terasa, 4 jam lebih perjalanan ini ditempuh. Mobil berhenti di sebuah tempat rest area yang sepi, sebelum akhirnya melanjutkan perjalanan, Nur, melihat hutan gelap, yang memanggil-manggil namanya.</p><p>"Hutan. desa ini ada di dalam hutan" kata mas Ilham.</p><p>Nur tidak berkomentar, ia hanya berdiri di samping mobil yang berhenti di tepi jalan hutan ini. sebuah hutan yang sudah di kenal oleh semua orang jawatimur.</p><p>Hutan D********, tidak beberapa lama, nyala lampu dan suara motor terdengar. mas Ilham, melambaikan tanganya.</p><p>"iku wong deso\'ne, melbu\'ne kudu numpak motor, gak isok numpak mobil soale" (itu orang desanya, masuknya harus naik motor, mobil tidak bisa masuk soalnya)</p><p>Nur dan Ayu, mengangguk, pertanda ia mengerti. tanpa berpikir panjang, Nur sudah duduk di jok belakang, dan mereka berangkat</p><p>memasuki jalan setapak, dengan tanah tidak rata, membuat Nur harus memegang kuat- jaket bapak yang memboncengnya, tanah masih lembab, di tambah embun fajar sudah terlihat disana-sini, malu-malu memenuhi pepohonan rimbun. Nur, melihat sesosok, wanita. ia sedang menari di atas batu</p><p>kilatan matanya tajam, dengan paras elok nan cantik, si Wanita, tersenyum menyambut tamu yang sudah ia tunggu.</p><p>melihatnya dari balik jalan lain, Nur mendapati, si wanita sudah hilang, tanpa jejak. ia tahu, dirinya sudah di sambut dengan entah apa itu.</p><p>memasuki Desa, mas Ilham berpeluk kangen dengan seorang pria yang mungkin seumuran dengan ayahnya di rumah.</p><p>pria itu ramah, dan murah senyum, menyambut tanganya, Nur mendengar si pria memperkenalkan diri.</p><p>"kulo, Prabu" (saya Prabu)</p><p>"sepurane Ham, aku eroh, kene wes kenal suwe, tapi deso iki gak tau loh gawe kegiatan KKN" (saya minta maaf ham, aku tahu, kita sudah kenal lama, tapi desa ini tidak pernah di pakai kegiatan KKN)</p><p>"tolong lah mas" kata mas Ilham, "dibantu, adikku,"</p><p>suasana saat itu, tegang.</p><p>"GAK ISOK HAM" kata pak Prabu menekan mas Ilham dengan ekspresi tak terduga.</p><p>"ngeten loh pak, ngapunten, kulo nyuwun tolong, kulo bakal jogo sikap ten mriki, mboten neko-neko, tolong pak" (begini loh pak, maaf, saya minta tolong, saya akan menjaga sikan disini)</p><p>(saya tidak akan aneh-aneh. tolong pak) ucap Ayu, matanya berlinangan air mata, ia tidak pernah melihat Ayu sengotot ini, mimik wajah pak Prabu yang sebelumnya mengeras, kini melunak.</p><p>"piro sing KKN dek?" (berapa yang KKN nanti dek?)</p><p>dengan bersemangat Ayu menjawab. "6 pak"</p><p>hari itu berakhir, dengan persetujuan pak Prabu dan tentu saja, masyarakat sekitar, sebelum meninggalkan tempat itu, Ayu dan Nur berkeliling memeriksa desa sebentar.</p><p>disana ia sudah tahu proker apa saja yang akan menjadi wacana mereka, salah satunya, kamar mandi dengan air sumur</p><p>ia tahu, masyarakat mendapatka akses air hanya dari sungai, jadi terfkirkan mungkin sumur lebih efisien, di tengah mereka merundingkan berbagai proker kelak, Nur, terdiam melihat sebuah batu yang di tutup oleh kain merah.</p><p>di bawahnya, ada sesajian lengkap dengan bau kemenyan.</p><p>diatasnya, berdiri sosok hitam, dengan mata picing, menyala merah. meski hari siang bolong, Nur bisa melihat, kulitnya yang di tutup oleh bulu, serta tanduk kerbau, mata mereka saling melihat satu sama lain, sebelum Nur mengatakan pada Ayu, bahwa, mereka harus pulang.</p><p>"lapo to Nur, kok gopoh men" (kenapa sih Nur, kok kamu buru buru pergi)</p><p>"kasihan mas Ilham, wes ngenteni" ucap Nur.</p><p>"yo wes, ayok" Ayu menimpali.</p><p>mereka pun segera naik motor, sebelum keluar dari desa itu. sosok yang Nur lihat, apalagi bila bukan Genderuwo.</p><p>"Nur, jak\'en Bima, yo, ambek Widya, engkok ambek kenalanku, kating" (Nur, ajak si Bima, sama Widya, sama kenalanku kating) ucap Ayu didalam mobil.</p><p>"Bima, lapo ngejak cah kui" (ngapain sih ngajak Bima)</p><p>"ben rame, kan wes kenal suwe" (biar rame, kan sudah kenal lama) sahut Ayu</p><p>"kok gak awakmu sing ngejak to" (kenapa bukan kamu saja yang ngajak) timpal Nur.</p><p>"kan awakmu biyen sak pondok\'an, wes luwih suwe kenal" (kan kalian pernah satu pondok, jadi sudah kenal lebih lama) "pokok\'e jak en arek iku yo" (pokoknya ajak anak itu ya)</p><p>"yo wes, iyo" Nur pun mengalah.</p><p>"tak telpone Widya, ben cepet di gawekno Proposal\'e mumpung pihak kampus gurung ngerilis daftar KKN\'e, gawat kalau pihak kampus wes ngerilis yo, mumpung wes oleh enggon KKN dewe" (biar Widya tak telpon, biar cepat di buatkan proposalnya)</p><p>(mumpung kampus belum buat daftar KKN nya, bisa gawat kalau sampai kampus udah buat daftarnya, mumpung kita sudah punya tempat KKN nya)</p><p>pelan, mobil itu pun meninggalkan jalanan hutan itu. Nur dan Ayu, kembali ke kotanya, mempersiapkan semua, sebelum mereka nanti kembali.</p><p>siang itu, Nur melihat Widya dan Ayu di hari pembekalan sebelum keberangkatan KKN mereka.</p><p>setelah menunggu cukup lama, akhirnya 2 orang yang akan bergabung dalam kelompok KKN mereka pun muncul, namanya adalah Wahyu dan Anton. mereka pun membicarakan semua proker dan menentukan-</p><p>jadwal keberangkatan. semua anak sudah setuju, termasuk Widya, yang hampir sepanjang hari terus menceritakan, bahwa ibunya memiliki firasat yang buruk pada tempat KKN mereka. Nur hanya diam dan mendengar, karena di dalam dirinya, ia merasakan hal yang sama.</p><p>Malam keberangkatan, Nur, Widya, Ayu, Bima, Wahyu dan Anton, sudah berkumpul, perjalanan di lanjutkan dengan mobil elf yang sudah mereka sewa untuk mengantarkan mereka ke pemberhentian dimana nanti mereka akan di jemput oleh warga desa. Nur masih bisa melihat temanya, Widya,</p><p>memasang wajah tidak nyaman.</p>', '', NULL, 'https://api.maba.my.id/storage/1/1603672784.jpg', NULL, NULL, NULL, 1, NULL, 1, 0, 15, 1, 1, NULL, NULL, '2020-10-25 17:39:44', '2020-10-30 09:24:38', NULL),
@@ -6363,7 +6363,7 @@ INSERT INTO `qnas` (`id`, `user_id`, `text`, `desc`, `thumb`, `embed`, `img`, `v
 	(22, 1, 'Kuliah wae', NULL, NULL, NULL, NULL, NULL, 'https://api.maba.my.id/storage/1/audio/1603867728.mp3', 86, NULL, NULL, 0, 0, 6, 0, 0, NULL, NULL, '2020-10-27 23:48:48', '2020-10-30 01:51:04', NULL);
 /*!40000 ALTER TABLE `qnas` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.qna_follows
+-- membuang struktur untuk table maba.qna_follows
 CREATE TABLE IF NOT EXISTS `qna_follows` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -6373,7 +6373,7 @@ CREATE TABLE IF NOT EXISTS `qna_follows` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.qna_follows: 15 rows
+-- Membuang data untuk tabel maba.qna_follows: 15 rows
 /*!40000 ALTER TABLE `qna_follows` DISABLE KEYS */;
 INSERT INTO `qna_follows` (`id`, `user_id`, `quest_id`, `created_at`, `updated_at`) VALUES
 	(1, 1, 6, '2020-10-25 18:10:00', '2020-10-25 18:10:00'),
@@ -6393,7 +6393,7 @@ INSERT INTO `qna_follows` (`id`, `user_id`, `quest_id`, `created_at`, `updated_a
 	(15, 1, 16, '2020-10-26 09:40:22', '2020-10-26 09:40:22');
 /*!40000 ALTER TABLE `qna_follows` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.read_messages
+-- membuang struktur untuk table maba.read_messages
 CREATE TABLE IF NOT EXISTS `read_messages` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -6403,11 +6403,11 @@ CREATE TABLE IF NOT EXISTS `read_messages` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.read_messages: 0 rows
+-- Membuang data untuk tabel maba.read_messages: 0 rows
 /*!40000 ALTER TABLE `read_messages` DISABLE KEYS */;
 /*!40000 ALTER TABLE `read_messages` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.reports
+-- membuang struktur untuk table maba.reports
 CREATE TABLE IF NOT EXISTS `reports` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
@@ -6418,11 +6418,11 @@ CREATE TABLE IF NOT EXISTS `reports` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.reports: 0 rows
+-- Membuang data untuk tabel maba.reports: 0 rows
 /*!40000 ALTER TABLE `reports` DISABLE KEYS */;
 /*!40000 ALTER TABLE `reports` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.users
+-- membuang struktur untuk table maba.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `fb_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -6450,7 +6450,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=607 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.users: ~599 rows (lebih kurang)
+-- Membuang data untuk tabel maba.users: ~599 rows (lebih kurang)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `fb_id`, `username`, `bio`, `name`, `email`, `avatar`, `password`, `phone`, `birthday`, `gender`, `study_program`, `university`, `angkatan`, `email_verified_at`, `admin`, `instagram`, `whatsapp`, `remember_token`, `created_at`, `updated_at`) VALUES
 	(1, '2772600539651399', 'anonim', NULL, 'Anonim', 'aribahtiarpro@gmail.com', 'https://api.maba.my.id/storage/1603671098.png', '$2y$10$q1pah99topKKhqaGrEp56urSXoeV.ouieKh8ssg4G3nWxDzCRZ8LS', NULL, NULL, 'L', 'Informatika', 'Universitas Siliwangi', 2018, '2020-08-22 11:34:08', 0, 'aplikasimaba', NULL, NULL, '2020-08-22 11:34:08', '2020-10-25 18:29:21'),
@@ -7054,7 +7054,7 @@ INSERT INTO `users` (`id`, `fb_id`, `username`, `bio`, `name`, `email`, `avatar`
 	(606, NULL, 'm_hafizudin', 'Mahasiswa Informatika Unsia', 'Muhammad Hafizudin', 'muh.hafizudin@gmail.com', 'https://api.maba.my.id/storage/1603987427.png', '$2y$10$oW00TO.FEvjVYGro/vgk2.0aoc5NNQA3.F9X15pAnl0RyvMCGiTIO', NULL, NULL, 'L', 'Informatika', 'Universitas Siber Asia', 2020, NULL, 0, '@m_hafizudin', '085333811100', NULL, '2020-10-29 09:01:17', '2020-10-29 09:03:47');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.user_follows
+-- membuang struktur untuk table maba.user_follows
 CREATE TABLE IF NOT EXISTS `user_follows` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -7064,7 +7064,7 @@ CREATE TABLE IF NOT EXISTS `user_follows` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1254 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.user_follows: 1.224 rows
+-- Membuang data untuk tabel maba.user_follows: 1.224 rows
 /*!40000 ALTER TABLE `user_follows` DISABLE KEYS */;
 INSERT INTO `user_follows` (`id`, `user_id`, `followed_id`, `created_at`, `updated_at`) VALUES
 	(1, 103, 103, '2020-09-16 04:46:58', '2020-09-16 04:46:58'),
@@ -8293,7 +8293,7 @@ INSERT INTO `user_follows` (`id`, `user_id`, `followed_id`, `created_at`, `updat
 	(1253, 606, 1, '2020-10-29 09:01:18', '2020-10-29 09:01:18');
 /*!40000 ALTER TABLE `user_follows` ENABLE KEYS */;
 
--- membuang struktur untuk table new_maba.websockets_statistics_entries
+-- membuang struktur untuk table maba.websockets_statistics_entries
 CREATE TABLE IF NOT EXISTS `websockets_statistics_entries` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `app_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -8305,7 +8305,7 @@ CREATE TABLE IF NOT EXISTS `websockets_statistics_entries` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel new_maba.websockets_statistics_entries: 0 rows
+-- Membuang data untuk tabel maba.websockets_statistics_entries: 0 rows
 /*!40000 ALTER TABLE `websockets_statistics_entries` DISABLE KEYS */;
 /*!40000 ALTER TABLE `websockets_statistics_entries` ENABLE KEYS */;
 
