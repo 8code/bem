@@ -127,6 +127,7 @@ Route::get("/chat_to/{id}","messageController@chatTo");
 
 
 Route::post("/send-message/{id}","messageController@sendMessage");
+Route::get("/read-message/{user_id}/{channel_id}","messageController@readMessage");
 
 
 

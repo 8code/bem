@@ -21,6 +21,8 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin', 'HomeController@admin')->name('admin');
+Route::post('/topup-diamon', 'HomeController@topUpDiamon');
 
 Route::get('/fix-follow-my-account', 'helperController@fixFollowMyAccount');
 

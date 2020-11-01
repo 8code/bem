@@ -4,8 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class read_messages extends Model
+class diamon extends Model
 {
     //
-    public $timestamps = false;
 }

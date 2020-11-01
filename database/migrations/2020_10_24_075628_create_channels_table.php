@@ -19,6 +19,8 @@ class CreateChannelsTable extends Migration
             $table->integer("user_1")->nullable();
             $table->integer("user_2")->nullable();
             $table->string("room_id")->unique(); // UUID
+            $table->datetime("last_active");
+            $table->string("anonim",10)->nullable();
             $table->timestamps();
         });
     }

@@ -158,6 +158,7 @@ class profileController extends Controller
                     $metda = qna::orderBy("id","DESC")
                         ->whereRaw($filterType)
                         ->where("user_id",$id)
+                        ->where("anonim",null)
                         ->where("status",1)
                         ->with("group")
                         ->with("user")

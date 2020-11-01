@@ -50,6 +50,7 @@ class qnaController extends Controller
                         ->with("group")
                         ->with("user")
                         ->with("quest")
+                        ->where("quest_id",null)
                         ->orderBy("created_at","DESC")
                         ->skip($skip)
                         ->take($take)
@@ -268,19 +269,16 @@ class qnaController extends Controller
             if(Auth::id()){
 
                 
-
-                if($req->anonim){
-                    $userId = 1;
-                }else {
                     $userId = Auth::id();
-                }
-
 
 
                 $metda = new MetDa;
                
                 if($req->quest_id){
                     $metda->quest_id = $req->quest_id;
+                }
+                if($req->anonim){
+                    $metda->anonim = $req->anonim;
                 }
 
                 if($req->type){
@@ -357,13 +355,7 @@ class qnaController extends Controller
                 $metda->save();
 
 
-                if($req->anonim){
-                    // Get Notif for Me
-                    $newNotif = new notif_quest;
-                    $newNotif->user_id = Auth::id();
-                    $newNotif->quest_id = $metda->id;
-                    $newNotif->save();
-                }
+          
 
                 if($req->type == 2){
                     // Event
@@ -574,7 +566,7 @@ class qnaController extends Controller
             $take = 5;
 
             if($req->page > 1){
-                $skip = $take * $req->page-1;
+                $skip = $take * ($req->page-1);
             }
 
             $metda = qna::
@@ -583,8 +575,8 @@ class qnaController extends Controller
                 ->with("quest")
                 ->where("status",1)
                 ->where("quest_id", $id)
+                ->orderBy("activity","DESC")
                 ->orderBy("created_at","DESC")
-                ->orderBy("id","DESC")
                 ->skip($skip)->take($take)
                 ->get();
 

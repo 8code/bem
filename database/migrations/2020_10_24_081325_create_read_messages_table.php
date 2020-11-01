@@ -17,7 +17,7 @@ class CreateReadMessagesTable extends Migration
             $table->id();
             $table->integer("user_id");
             $table->integer("channel_id");
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

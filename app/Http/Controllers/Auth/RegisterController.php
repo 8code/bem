@@ -90,7 +90,7 @@ class RegisterController extends Controller
 
         }
 
-        $group_id = [82,83,84,85,86,87,69];
+        $group_id = [2,82,83,84,85,86,87,69];
 
         foreach($group_id as $id){
             $cek3 = group_follow::where("user_id",$user->id)->where("group_id",$id)->first();
