@@ -88,6 +88,8 @@ class messageController extends Controller
                     $c->notread = $notread;
                     $c->user = $user;
                     $c->anonim = $c->anonim;
+                    $c->message = $message;
+
                     
                     array_push($res, $c);
                     
