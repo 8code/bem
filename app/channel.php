@@ -17,6 +17,6 @@ class channel extends Model
     }
     public function event()
     {
-        return $this->hasOne('App\Event', 'id', 'event_id');
+        return $this->hasOne('App\event', 'id', 'event_id');
     }
 }
