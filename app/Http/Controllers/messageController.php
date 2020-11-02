@@ -226,7 +226,7 @@ class messageController extends Controller
             
                     $audio = str_replace(' ', '+', $audio); 
             
-                    $audioName = Auth::id() ."/audio/". time().'.mp3';
+                    $audioName = "audio-message/".Auth::id()."-". time().'.mp3';
             
                     Storage::disk('public')->put($audioName, base64_decode($audio));
 
