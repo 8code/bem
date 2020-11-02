@@ -193,12 +193,44 @@ class messageController extends Controller
             $m->channel_id = $id;
             $m->user_id = Auth::id();
             $m->text = $req->text;
-            if($req->image){
-               $m->image = $req->image;
-            }
-            if($req->audio){
-                $m->audio = $req->audio;
-            }
+            if($req->img){
+                    
+                    $image_64 = $req->img; //your base64 encoded data
+            
+                    $replace = substr($image_64, 0, strpos($image_64, ',')+1); 
+            
+                    // find substring fro replace here eg: data:image/png;base64,
+            
+                    $image = str_replace($replace, '', $image_64); 
+            
+                    $image = str_replace(' ', '+', $image); 
+            
+                    $imageName = Auth::id() ."/". time().'.jpg';
+            
+                    Storage::disk('public')->put($imageName, base64_decode($image));
+
+                    $m->img = env("APP_URL")."/storage/".$imageName;
+
+                    $m->thumb = "";
+                }
+                if($req->audio){
+                
+
+                    $replace = substr($req->audio, 0, strpos($req->audio, ',')+1); 
+            
+                    // find substring fro replace here eg: data:image/png;base64,
+            
+                    $audio = str_replace($replace, '', $req->audio); 
+            
+                    $audio = str_replace(' ', '+', $audio); 
+            
+                    $audioName = Auth::id() ."/audio/". time().'.mp3';
+            
+                    Storage::disk('public')->put($audioName, base64_decode($audio));
+
+                    $m->audio = env("APP_URL")."/storage/".$audioName;
+
+                }
              if($req->stiker){
                 $m->stiker = $req->stiker;
              }

@@ -290,9 +290,9 @@ class qnaController extends Controller
                 }
                 $metda->text =  preg_replace('/\s+/',' ',$req->text);
 
-                if($req->audio){
-                    $metda->audio =  $req->audio;
-                }
+                // if($req->audio){
+                //     $metda->audio =  $req->audio;
+                // }
                 if($req->embed){
                     $metda->embed = $req->embed;
                 }
@@ -375,6 +375,9 @@ class qnaController extends Controller
                     $newChannel = new channel;
                     $newChannel->room_id = Uuid::uuid1();
                     $newChannel->event_id = $newEvent->id;
+                    if($req->anonim){
+                        $newChannel->anonim = $req->anonim;
+                    }
                     $newChannel->save();
 
 
