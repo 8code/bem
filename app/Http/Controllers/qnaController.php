@@ -315,9 +315,8 @@ class qnaController extends Controller
             
                     Storage::disk('public')->put($imageName, base64_decode($image));
 
-                    $metda->img = env("APP_URL")."/storage/".$imageName;
+                    $metda->image = env("APP_URL")."/storage/".$imageName;
 
-                    $metda->thumb = "";
                 }
                 if($req->audio){
                 
