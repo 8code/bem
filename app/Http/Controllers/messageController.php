@@ -207,7 +207,7 @@ class messageController extends Controller
             
                     $image = str_replace(' ', '+', $image); 
             
-                    $imageName = Auth::id() ."/". time().'.jpg';
+                    $imageName = "img-message/".Auth::id() ."-". time().'.jpg';
             
                     Storage::disk('public')->put($imageName, base64_decode($image));
 
