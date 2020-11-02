@@ -376,7 +376,7 @@ class qnaController extends Controller
                     $newChannel->room_id = Uuid::uuid1();
                     $newChannel->event_id = $newEvent->id;
                     if($req->anonim){
-                        $newChannel->anonim = $req->anonim;
+                        $newChannel->anonim = "ya";
                     }
                     $newChannel->save();
 
