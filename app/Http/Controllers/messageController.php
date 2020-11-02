@@ -211,9 +211,8 @@ class messageController extends Controller
             
                     Storage::disk('public')->put($imageName, base64_decode($image));
 
-                    $m->img = env("APP_URL")."/storage/".$imageName;
+                    $m->image = env("APP_URL")."/storage/".$imageName;
 
-                    $m->thumb = "";
                 }
                 if($req->audio){
                 
