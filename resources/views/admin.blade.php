@@ -48,7 +48,7 @@
         <div class="col-md-3 text-center">
                
             <h1 class="text-danger">
-            <small class="text-secondary">Aktivitas </small>  {{ \App\activity::count() }}
+            <small class="text-secondary">Aktivitas </small>  {{ \App\activity::whereIn("tipe",[1,2])->count() }}
              </h1>
      </div>
      <div class="col-md-3 text-center">
