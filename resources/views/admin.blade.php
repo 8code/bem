@@ -7,29 +7,58 @@
     <div class="col-md-12 row py-4">
         <div class="col-md-3 text-center">
                 
+                <h1 class="text-success">
+                <small class="text-secondary">Group</small>  {{ \App\group::count() }}
+                </h1>
+        </div>
+    
+        <div class="col-md-3 text-center">
+                
                 <h1 class="text-primary">
                 <small class="text-secondary">Users</small> {{ \App\User::count() }}
                 </h1>
         </div>
+
         <div class="col-md-3 text-center">
                 
                 <h1 class="text-success">
-                <small class="text-secondary">Quest </small>  {{ \App\qna::count() }}
+                   <small class="text-secondary">Quest </small>  {{ \App\qna::count() }}
+                </h1>
+        </div>
+       
+        
+        <div class="col-md-3 text-center">
+               <h1 class="text-warning">
+                <small class="text-secondary">University</small>  {{ \App\user::distinct()->count('university') }}
+                </h1>
+        </div>
+        
+    </div>
+    <div class="col-md-12 row py-4">
+        <div class="col-md-3 text-center">
+            <h1 class="text-warning">
+                <small class="text-secondary">Event</small>  {{ \App\event::count() }}
+                </h1>
+        </div>
+        <div class="col-md-3 text-center">
+            <h1 class="text-warning">
+                <small class="text-secondary">Chatting</small>  {{ \App\messages::count() }}
                 </h1>
         </div>
         <div class="col-md-3 text-center">
                
-               <h1 class="text-danger">
-               <small class="text-secondary">Aktivitas </small>  {{ \App\activity::count() }}
-                </h1>
-        </div>
-        <div class="col-md-3 text-center">
-               <h1 class="text-warning">
-                <small class="text-secondary">Diamon</small>  {{ \App\diamon::where("user_id",null)->sum("diamon") }}
-                </h1>
-        </div>
+            <h1 class="text-danger">
+            <small class="text-secondary">Aktivitas </small>  {{ \App\activity::count() }}
+             </h1>
+     </div>
+     <div class="col-md-3 text-center">
+               
+        <h1 class="text-danger">
+        <small class="text-secondary">Report </small>  {{ \App\report::count() }}
+         </h1>
+ </div>
     </div>
-    <div class="card col-md-12">
+    {{-- <div class="card col-md-12">
 
             <div class="card-body">
             
@@ -105,15 +134,15 @@
             </div>
 
             </div>
-    </div>
+    </div> --}}
 
     
-    <div class="card col-md-12">
+    {{-- <div class="card col-md-12">
             <div class="card-body">
             
             3. Brodcast Email
             </div>
-    </div>
+    </div> --}}
 </div>
 </div>
 @endsection
